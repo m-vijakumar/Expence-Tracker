@@ -1,0 +1,96 @@
+<div class="d-flex justify-content-between">
+    <h2>Register</h2>
+  
+    <button mat-button (click)="onClose()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  
+  <div style="overflow: hidden; height: 450px; align-content: center">
+    <form #form="ngForm" (submit)="onSubmit(form)" autocomplete="off">
+      <div class="mt-4 form-group">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">
+            User Name
+            <label style="content: '*'; color: red">*</label>
+          </label>
+          <input
+            class="col-md-6"
+            required
+            minlength="4"
+            type="text"
+            name="UserName"
+            #UserName="ngModel"
+            [(ngModel)]="service.formData.UserName"
+          />
+        </div>
+  
+        <div class="input-group-prepend form-group row">
+          <label class="col-sm-3 col-form-label">
+            email <label style="content: '*'; color: red">*</label>
+          </label>
+          <input
+            class="col-md-6"
+            required
+            minlength="4"
+            type="email"
+            name="email"
+            #email="ngModel"
+            [(ngModel)]="service.formData.email"
+          />
+        </div>
+  
+        <div class="input-group-prepend form-group row">
+          <label class="col-sm-3 col-form-label">
+            Password
+            <label style="content: '*'; color: red">*</label>
+          </label>
+  
+          <input
+            class="col-md-6"
+            required
+            minlength="4"
+            type="password"
+            name="password"
+            #Password="ngModel"
+            [(ngModel)]="service.formData.password"
+          />
+        </div>
+  
+        <div
+          class="text-left text-danger"
+          *ngIf="
+            (UserName.invalid && UserName.touched) ||
+            (email.invalid && email.touched) ||
+            (Password.invalid && Password.touched)
+          "
+        >
+          Please enter required Details.
+        </div>
+        <!-- <div
+          class="text-left text-danger"
+          *ngIf="email.invalid && email.touched"
+        >
+          Please enter Email Id.
+        </div>
+        <div
+          class="text-left text-danger"
+          *ngIf="Password.invalid && Password.touched"
+        >
+          Please enter Password.
+        </div> -->
+      </div>
+      <button
+        style="text-align: center"
+        class="text-center m-0"
+        class="MT-4"
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="form.invalid"
+      >
+        Register
+      </button>
+    </form>
+  </div>
+  

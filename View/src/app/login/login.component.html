@@ -1,0 +1,62 @@
+<div class="d-flex justify-content-between">
+    <h4>Login</h4>
+  
+    <button mat-button (click)="onClose()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+  
+<div style="overflow: hidden; height: 450px">
+    <form #form="ngForm" (submit)="onSubmit(form)"  autocomplete="off">
+      <div class="mt-4 form-group row">
+        <div class="form-group row">
+          <label class="col-sm-3 col-form-label">
+            email
+            <label style="content: '*'; color: red">*</label>
+          </label>
+          <input
+            class="col-md-6"
+            required
+            minlength="4"
+            type="text"
+            name="email"
+            [(ngModel)]="service.formData.email"
+          />
+        </div>
+  
+        <div class="input-group-prepend form-group row">
+          <label class="col-sm-3 col-form-label">
+            Password
+            <label style="content: '*'; color: red">*</label>
+          </label>
+  
+          <input
+            class="col-md-6"
+            required
+            minlength="4"
+            type="password"
+            name="password"
+            [(ngModel)]="service.formData.password"
+          />
+        </div>
+  
+        <div
+          class="text-left text-danger"
+          
+        >
+          Please enter Email.
+        </div>
+      </div>
+      <button
+        class="MT-4"
+        mat-raised-button
+        color="primary"
+        type="submit"
+        [disabled]="form.invalid"
+      >
+        Login
+      </button>
+    </form>
+  </div>
+  
