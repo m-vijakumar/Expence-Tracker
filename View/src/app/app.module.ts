@@ -7,8 +7,10 @@ import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
-import { MaterialModule } from './material/material.module';
+import { MaterialModule } from './Modules/material.module';
+import { primengModule } from './Modules/primeng.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { CarouselModule } from 'primeng/carousel';
 // import { ButtonModule } from 'primeng/button';
@@ -20,6 +22,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 import { SubscriptionService } from './services/subscription.service';
+import { TransactionComponent } from './transaction/transaction.component';
+
 
 
 @NgModule({
@@ -27,7 +31,9 @@ import { SubscriptionService } from './services/subscription.service';
     AppComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    DashboardComponent,
+    TransactionComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +42,7 @@ import { SubscriptionService } from './services/subscription.service';
     MaterialModule,
     HttpClientModule,
     FormsModule,
+    primengModule,
     // FlexLayoutModule,
     // NgbModule,
     // CarouselModule,

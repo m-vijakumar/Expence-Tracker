@@ -1,0 +1,33 @@
+<div class="row">
+    <div class="col-sm-12 col-md-4">
+        ADD/Update Transation
+        <div>edafeawfasd</div>
+    </div>
+    <div class="col-sm-12 col-md-4">
+
+        <div class=" flex justify-content-center">
+            <p-chart type="doughnut" [data]="this.chartData" [options]="this.chartOptions"></p-chart>
+        </div>
+    </div>
+    <div class="col-sm-12 col-md-4">
+        <div class="card">
+
+            <h6>Transations</h6>
+            <p-divider></p-divider>
+            <p-virtualScroller [value]="transactions" scrollHeight="300px" [itemSize]="50">
+                <ng-template let-transaction pTemplate="item">
+                    <p-card>
+                        <div>
+                            <div>
+                                <div>
+                                    <i class="pi pi-credit-card"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </p-card>
+                </ng-template>
+
+            </p-virtualScroller>
+        </div>
+    </div>
+</div>

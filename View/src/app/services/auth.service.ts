@@ -9,7 +9,6 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-  private _listeners: any;
 
   constructor(
     private http: HttpClient,
@@ -21,24 +20,46 @@ export class AuthService {
 
   readonly APIUrl = 'http://localhost:5000/api/auth';
 
+  setUserDetails() {
+    
+    const authToken = localStorage.getItem('authToken')
+    console.log(" authtocken "+ localStorage.getItem('authToken'));
+    if (authToken) {
+      
+      const userDetails = new User();
+      const decodeUserDetails: any = JSON.parse(
+        atob(authToken.split('.')[1])
+      );
+      console.log(decodeUserDetails);
+      userDetails.UserId = decodeUserDetails.data.id;
+      userDetails.UserName = decodeUserDetails.data.username;
+      userDetails.isLoggedIn = true;
+
+      this.subscriptionService.userData.next(userDetails);
+
+    }
+
+  }
+  resetSubscription() {
+    this.subscriptionService.userData.next(new User());
+  }
 
   register(reg: User) {
     console.log(reg);
     return this.http.post<any>(this.APIUrl + '/register', reg).pipe(
       map((res) => {
-      //   if (res && res.token) {
-      //     localStorage.setItem('authToken', res.token);
-      //     this.setUserDetails();
-      //     localStorage.setItem('UserId', res.userDetails.userId);
-      //     localStorage.setItem('UserName', res.userDetails.userName);
-      //     this.subscriptionService.cartItemcount$.next(res.carItemCount);
-      //   }
+        if (res && res.token) {
+          localStorage.setItem('authToken', res.authtoken);
+          this.setUserDetails();
+        }
         console.log(res);
         return res;
       })
     );
   }
 
+  private _listeners = new Subject<any>();
+  
   listen(): Observable<any> {
     return this._listeners.asObservable();
   }
@@ -51,20 +72,24 @@ export class AuthService {
     return this.http.post<any>(this.APIUrl + '/login', login).pipe(
       map((response) => {
         console.log(response);
-        if (response && response.token) {
-          // localStorage.setItem('authToken', response.token);
-          // this.setUserDetails();
-          // localStorage.setItem('UserId', response.userDetails.userId);
-          // this.cartService
-          //   .getCartCount(response.userDetails.userId)
-          //   .subscribe((res) => {
-          //     console.log(res);
-          //   });
-          // this.subscriptionService.cartItemcount$.next(response.carItemCount);
+        if (response) {
+          console.log(response.authtoken)
+          localStorage.setItem('authToken', response.authtoken);
+          this.setUserDetails();
+          // localStorage.setItem('UserId', response.userId);
         }
-        console.log(response.session.user);
         return response;
       })
     );
   }
+
+  logout() {
+    localStorage.clear();
+    this.isLoggedIn = false;
+    this.resetSubscription();
+    return 'logout';
+  }
+
+
+
 }

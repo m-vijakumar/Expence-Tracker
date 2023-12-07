@@ -1,0 +1,57 @@
+
+
+<!-- <div class="d-flex justify-content-between">
+    <h4>Login</h4>
+
+    <button mat-button (click)="onClose()">
+        <mat-icon>close</mat-icon>
+    </button>
+</div>
+
+<div style="overflow: hidden; height: 450px">
+    <form #form="ngForm" (submit)="onSubmit(form)" autocomplete="off">
+        <div class="mt-4 form-group row">
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">
+                    Description
+                    <label style="content: '*'; color: red">*</label>
+                </label>
+                <input class="col-md-6" required minlength="4" type="text" name="description"
+                    [(ngModel)]="service.formData.description" />
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">
+                    Amount</label>
+                    <label style="content: '*'; color: red">*</label>
+                    <mat-form-field floatLabel="always">
+                        <mat-label>Amount</mat-label>
+                        <input matInput type="number" class="example-right-align" placeholder="0">
+                        <span matTextPrefix>$&nbsp;</span>
+                        <span matTextSuffix>.00</span>
+                    </mat-form-field>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">
+                    Password <label style="content: '*'; color: red">*</label>
+                </label>
+                <mat-form-field [color]="colorControl.value!">
+                    <mat-label>Color</mat-label>
+                    <mat-select [formControl]="colorControl">
+                      <mat-option value="primary">Primary</mat-option>
+                      <mat-option value="accent">Accent</mat-option>
+                      <mat-option value="warn">Warn</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                <input class="col-md-6" required minlength="4" type="text" name="password"
+                    [(ngModel)]="" />
+            </div>
+
+            <div class="text-left text-danger">
+                Please enter required fields.
+            </div>
+        </div>
+        <button class="MT-4" mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+            Submit
+        </button>
+    </form>
+</div> -->

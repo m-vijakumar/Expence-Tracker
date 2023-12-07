@@ -23,6 +23,7 @@ import { FormControl } from '@angular/forms';
 export class AppComponent implements OnInit {
   userId: any;
   userDataSubscription: any;
+  authdata:any;
   userData = new User();
   title = 'Expence Tracker';
   isLoggedIn?: boolean = false;
@@ -39,21 +40,36 @@ export class AppComponent implements OnInit {
     private router: Router
   ) {
     this.userId = localStorage.getItem('userId');
-    console.log(localStorage.getItem('User'));
+    console.log(localStorage.getItem('authToken'));
     this.authservice.isLoggedIn = false;
   }
   ngOnInit(): void {
+    if (localStorage.getItem('authToken')) {
+      const authToken = localStorage.getItem('authToken') || ' ';
+      if (authToken) {
+        const decodeUserDetails: any = JSON.parse(
+          atob(authToken.split('.')[1])
+        );
+        console.log(decodeUserDetails)
+        this.userData.UserId = decodeUserDetails.data.id;
+        this.userData.UserName = decodeUserDetails.username;
+        this.userData.isLoggedIn = true;
+        
+        this.subscriptionService.userData.next(this.userData);
+        }
+    }
     this.userDataSubscription = this.subscriptionService.userData
       .asObservable()
       .subscribe((data) => {
+        
         this.userData = data;
       });
     console.log(this.userData);
-    // this.filteredOptions = this.myControl.valueChanges.pipe(
-    //   startWith(''),
-    //   map((value) => this._filter(value))
-    // );
-    console.log(this.filteredOptions);
+
+    if (!(this.userData.isLoggedIn == true)) {
+      console.log(this.userData.isLoggedIn == false)
+      this.router.navigate(['/dashboard']);
+    }
   }
 
   onLogin() {
@@ -73,5 +89,15 @@ export class AppComponent implements OnInit {
     this.dialog.open(RegisterComponent, dialogConfig);
   }
 
-  
+  onLogout() {
+    this.authservice.logout();
+    this.router.navigate(['/']);
+    this.snackBar.open('logout', '', {
+      duration: 3000,
+      verticalPosition: 'top',
+    });
+    // this.router.navigate(['/login']);
+  }
+
+
 }

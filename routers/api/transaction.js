@@ -9,14 +9,14 @@ const transactionController = require("../../Controllers/TransactionController.j
 // @desc    starting router
 // @access  PRAVITE
 
-router.get("/all-transaction", helper.sessionVerfiy, transactionController.getAllTranscations )
+router.get("/all-transaction", helper.JWTverify, transactionController.getAllTranscations )
 
 // @type    POST
 //@route    /api/transcation/add
 // @desc    starting router
 // @access  PRAVITE
 
-router.post("/add", helper.sessionVerfiy, transactionController.create )
+router.post("/add", helper.JWTverify, transactionController.create )
 
 
 // @type    DELETE
@@ -24,6 +24,6 @@ router.post("/add", helper.sessionVerfiy, transactionController.create )
 // @desc    starting router
 // @access  PRAVITE
 
-router.delete("/delete", helper.sessionVerfiy, transactionController.deleteTranscation )
+router.delete("/delete", helper.JWTverify, transactionController.deleteTranscation )
 
 module.exports = router;

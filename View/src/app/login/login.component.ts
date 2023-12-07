@@ -34,13 +34,14 @@ constructor(
 
   onClose() {
     this.dialogbox.close();
-
+    this.service.filter('Register click');
   }
 
   onSubmit(form: NgForm) {
     const returnUrl =
       this.route.snapshot.queryParamMap.get('returnUrl') || '/dashboard';
     this.service.login(form.value).subscribe((res) => {
+      console.log("Asdas" + res)
       this.resetForm(form);
       this.snackBar.open('Welcome', '', {
         duration: 2000,

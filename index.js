@@ -5,6 +5,7 @@ const bodyPaser = require("body-parser");
 const express = require("express");
 const cors = require('cors')
 const session = require("express-session")
+const jwt = require("jsonwebtoken")
 const db = require("./setup/config/db.js");
 const app = express();
 

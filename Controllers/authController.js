@@ -1,8 +1,11 @@
+const { cookie } = require("express-validator");
 const User = require("../models/UserModel");
-
+const jwt = require("jsonwebtoken")
+const secert = require("../setup/keys/tokens").TOKEN_KEY
 exports.register = async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
+  const username = req.body.UserName
 
   if (await User.checkIfUserExists(email)) {
     // Dashboard
@@ -13,7 +16,7 @@ exports.register = async (req, res) => {
     });
   }
 
-  let newUser = { email: email, password: password };
+  let newUser = { email: email, password: password, username : username };
   let user = new User(newUser);
   user
     .save()
@@ -21,13 +24,20 @@ exports.register = async (req, res) => {
       const userData = {
         id: user.id,
         email: user.email,
+        username: user.username
       };
       try {
         req.session.user = userData;
+
+        const token =  jwt.sign({
+          data: userData
+        }, secert,
+        { expiresIn: 60 * 60 });
+  
         return res.json({
           error: false,
           success: true,
-          data:req.session
+          authtoken:token
         });
       } catch (error) {
         return res.json({
@@ -62,12 +72,22 @@ exports.login = async (req, res) => {
     const payload = {
       id: user.id,
       email: user.email,
+      username: user.username
+      
     };
     try {
+
+     const token =  jwt.sign({
+        data: payload
+      }, secert,
+      { expiresIn: 60 * 60 });
+
       req.session.user = payload;
+
       return res.json({
         error: false,
-        success: true
+        success: true,
+        authtoken:token
       });
     } catch (error) {
       return res.json({

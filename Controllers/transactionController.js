@@ -1,7 +1,8 @@
 const User = require("../models/UserModel");
 
 exports.getAllTranscations = async (req, res) => {
-  await User.findOne({ _id: req.session.user.id }, { password: 0, __v: 0 })
+  console.log(req.user)
+  await User.findOne({ _id: req.user.id }, { password: 0, __v: 0 })
     .then((result) => {
       res.json({
         error: false,
@@ -28,7 +29,7 @@ exports.create = async (req, res) => {
 
   console.log(transcationData);
   await User.findOneAndUpdate(
-    { _id: req.session.user.id },
+    { _id: req.user.id },
     {
       $push: {
         Transactions: {
@@ -59,7 +60,7 @@ exports.create = async (req, res) => {
 exports.deleteTranscation = async (req, res) => {
     console.log( "Wefaef" + req.body.postId  )
     await User.updateOne(
-      { _id: req.session.user.id},
+      { _id: req.user.id},
       { $pull: {Transactions: { _id: req.body.postId  }  } } )
       .then((result) => {
         console.log(result)

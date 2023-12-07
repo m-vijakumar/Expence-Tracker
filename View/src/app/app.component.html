@@ -1,22 +1,38 @@
+<mat-toolbar class="navbar">
 
-<h1> Expense Tracker</h1>
+  <ng-container style="justify-content: baseline;" >
+    <h1>Expense Tracker</h1>
+  </ng-container>
 
 
-      <button
-        class="m-1 btn btn-light btn-outline-primary"
-        mat-raised-button
-        (click)="onLogin()"
-        Button
-      >
+  <ng-container >
+    
+    <ng-container *ngIf="!userData.isLoggedIn">
+     <div>
+       <button class="m-1 btn btn-light btn-outline-primary" mat-raised-button (click)="onLogin()" Button>
         Login
       </button>
 
-      <button
-        class="m-1 btn btn-light btn-outline-primary"
-        mat-raised-button
-        (click)="onRegister()"
-        Button
-      >
+      <button class="m-1 btn btn-light btn-outline-primary" mat-raised-button (click)="onRegister()" Button>
         Sign up
       </button>
+     </div>
+
+    </ng-container >
+
+    <ng-container *ngIf="userData.isLoggedIn">
+
+      <mat-form-field style="font-size: xx-small;">
+        <mat-label>{{userData.UserName}} Vijay Kumar</mat-label>
+        <mat-select>
+          <mat-option (click)="onLogout()">Logout</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </ng-container>
+  </ng-container>
+
+
+
+</mat-toolbar>
 <router-outlet></router-outlet>

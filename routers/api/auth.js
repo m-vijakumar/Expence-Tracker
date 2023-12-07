@@ -40,6 +40,6 @@ router.post("/auth/login", authController.login )
 // @desc    starting router
 // @access  PRAVITE
 
-router.delete("/auth/logout", helper.sessionVerfiy, authController.logout )
+router.delete("/auth/logout", helper.JWTverify, authController.logout )
 
 module.exports =router;
