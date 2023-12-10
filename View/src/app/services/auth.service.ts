@@ -30,9 +30,10 @@ export class AuthService {
       const decodeUserDetails: any = JSON.parse(
         atob(authToken.split('.')[1])
       );
+      console.log(decodeUserDetails.data)
       console.log(decodeUserDetails);
-      userDetails.UserId = decodeUserDetails.data.id;
-      userDetails.UserName = decodeUserDetails.data.username;
+      userDetails.userId = decodeUserDetails.data.id;
+      userDetails.userName = decodeUserDetails.data.username;
       userDetails.isLoggedIn = true;
 
       this.subscriptionService.userData.next(userDetails);
@@ -75,6 +76,7 @@ export class AuthService {
         if (response) {
           console.log(response.authtoken)
           localStorage.setItem('authToken', response.authtoken);
+          localStorage.setItem('transactionstoken', response.transactionstoken)
           this.setUserDetails();
           // localStorage.setItem('UserId', response.userId);
         }

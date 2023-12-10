@@ -25,8 +25,8 @@ constructor(
   resetForm(form?: NgForm) {
     if (form != null) form.resetForm();
     this.service.formData = {
-      UserId: 0,
-      UserName: '',
+      userId: 0,
+      userName: '',
       email: '',
       password: '',
     };

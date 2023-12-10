@@ -37,6 +37,8 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
+
+    //Get UserData from Subscribed data
     this.userDataSubscription = this.subscriptionService.userData
       .asObservable()
       .subscribe((data) => {
@@ -46,6 +48,19 @@ export class DashboardComponent implements OnInit {
     if (!(this.userData.isLoggedIn == true)) {
       console.log(this.userData.isLoggedIn == false);
       this.router.navigate(['/']);
+    }
+
+    //get all Transaction
+    if(localStorage.getItem('transactionstoken')){
+      const transactionsToken = localStorage.getItem('transactionstoken') || ' ';
+      if(transactionsToken){
+        const transactionsList: any = JSON.parse(
+          atob(transactionsToken.split('.')[1])
+        );
+        console.log(transactionsList);
+        this.transactions = transactionsList.data.transactions;
+        console.log(this.transactions[0].amount);
+      }
     }
 
     this.chartData = {
@@ -68,6 +83,6 @@ export class DashboardComponent implements OnInit {
       },
     };
 
-    this.transactions = [1,2,3,4,5,6 , 7];
+    //this.transactions = [1,2,3,4,5,6 , 7];
   }
 }

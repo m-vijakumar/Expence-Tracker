@@ -24,6 +24,10 @@ const UserSchema = new Schema(
           type: String,
           require: true,
         },
+        type:{
+          type: String,
+          required: true
+        },
         amount: {
           type: Number,
           require: true,

@@ -1,14 +1,23 @@
 <div class="row">
+    <!-- Transaction Add -->
     <div class="col-sm-12 col-md-4">
-        ADD/Update Transation
-        <div>edafeawfasd</div>
+        <div class="card">
+            <h6>ADD/Update Transation</h6>
+        </div>
+        <p-divider></p-divider>
+        <div class="d-flex flex-coliumn align-items-center">
+            <!-- <p-selectButton [options]="cities" [(ngModel)]="selectedCity" optionLabel="name"></p-selectButton> -->
+        </div>
     </div>
+
+    <!-- Transaction Chart -->
     <div class="col-sm-12 col-md-4">
 
         <div class=" flex justify-content-center">
             <p-chart type="doughnut" [data]="this.chartData" [options]="this.chartOptions"></p-chart>
         </div>
     </div>
+    <!-- Transactions List -->
     <div class="col-sm-12 col-md-4">
         <div class="card">
 
@@ -21,6 +30,7 @@
                             <div>
                                 <div>
                                     <i class="pi pi-credit-card"></i>
+                                    <span>{{transaction.amount}}</span>
                                 </div>
                             </div>
                         </div>

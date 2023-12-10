@@ -39,8 +39,6 @@ export class AppComponent implements OnInit {
     private subscriptionService: SubscriptionService,
     private router: Router
   ) {
-    this.userId = localStorage.getItem('userId');
-    console.log(localStorage.getItem('authToken'));
     this.authservice.isLoggedIn = false;
   }
   ngOnInit(): void {
@@ -51,8 +49,8 @@ export class AppComponent implements OnInit {
           atob(authToken.split('.')[1])
         );
         console.log(decodeUserDetails)
-        this.userData.UserId = decodeUserDetails.data.id;
-        this.userData.UserName = decodeUserDetails.username;
+        this.userData.userId = decodeUserDetails.data.id;
+        this.userData.userName = decodeUserDetails.username;
         this.userData.isLoggedIn = true;
         
         this.subscriptionService.userData.next(this.userData);

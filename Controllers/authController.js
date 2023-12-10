@@ -72,22 +72,36 @@ exports.login = async (req, res) => {
     const payload = {
       id: user.id,
       email: user.email,
-      username: user.username
+      username: user.username,
+      
       
     };
+
+    const transactionsPayload = {
+      id: user.id,
+      transactions: user.Transactions
+    }
+
     try {
 
-     const token =  jwt.sign({
+     const authToken =  jwt.sign({
         data: payload
       }, secert,
       { expiresIn: 60 * 60 });
 
+      const transactionsToken =  jwt.sign({
+        data: transactionsPayload
+      }, secert,
+      { expiresIn: 60 * 60 });
+
+      console.log(payload)
       req.session.user = payload;
 
       return res.json({
         error: false,
         success: true,
-        authtoken:token
+        authtoken:authToken,
+        transactionstoken: transactionsToken
       });
     } catch (error) {
       return res.json({
