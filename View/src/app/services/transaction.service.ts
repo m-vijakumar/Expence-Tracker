@@ -1,6 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { SubscriptionService } from './subscription.service';
+import { Transaction } from '../models/transaction-model';
+import { Observable, Subject } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { response } from 'express';
 
 @Injectable({
   providedIn: 'root'
@@ -12,28 +16,29 @@ export class TransactionService {
     private subscriptionService: SubscriptionService
   ) { }
 
+  formData!: Transaction;
+
   readonly APIUrl = 'http://localhost:5000/api/transaction';
 
-  setTransactionsDetails() {
-    
-    const transactionsToken = localStorage.getItem('transactionstoken')
-    console.log(" transactionstoken "+ localStorage.getItem('transactionstoken'));
-    if (transactionsToken) {
-      
-      // const userDetails = new User();
-      const decodeUserDetails: any = JSON.parse(
-        atob(transactionsToken.split('.')[1])
-      );
-      console.log(decodeUserDetails.data)
-      // console.log(decodeUserDetails);
-      // userDetails.userId = decodeUserDetails.data.id;
-      // userDetails.userName = decodeUserDetails.data.username;
-      // userDetails.isLoggedIn = true;
+  readonly authHeader = new HttpHeaders({
+    Authorization: 'Bearer ' + localStorage.getItem('authToken'),
+  });
 
-      // this.subscriptionService.userData.next(userDetails);
+  private _listeners = new Subject<any>();
+  
+  listen(): Observable<any> {
+    return this._listeners.asObservable();
+  }
 
-    }
-
+  addTransaction(transaction: Transaction){
+    console.log("transaction service")
+    console.log(transaction)
+    return this.http.post<any>(this.APIUrl+ '/add', transaction, { headers: this.authHeader }).pipe(
+      map((response)=>{
+        console.log(response)
+        return response;
+      })
+    )
   }
   
   getAllTransactions(){

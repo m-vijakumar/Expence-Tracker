@@ -1,57 +1,13 @@
+<form [formGroup]="transactionForm" class="d-flex flex-column align-items-center flex-wrap p-2" (submit)="addTransaction()">
+    <p-selectButton formControlName="type" defaultvalue="income" [options]="stateOptions" optionLabel="label" class="p-2 custom-width" optionValue="value"></p-selectButton>
 
+    <input formControlName="description" placeholder="Description" type="text" class="p-inputtext-lg mb-2 " pInputText />
 
-<!-- <div class="d-flex justify-content-between">
-    <h4>Login</h4>
+    <p-inputNumber formControlName="amount" placeholder="Amount" inputId="integeronly" class="p-2 mb-2 custom-width"></p-inputNumber>
 
-    <button mat-button (click)="onClose()">
-        <mat-icon>close</mat-icon>
-    </button>
-</div>
+    <p-dropdown formControlName="category" [options]="categories" class="p-2 mb-2 custom-width" placeholder="Select Category"></p-dropdown>
 
-<div style="overflow: hidden; height: 450px">
-    <form #form="ngForm" (submit)="onSubmit(form)" autocomplete="off">
-        <div class="mt-4 form-group row">
-            <div class="form-group row">
-                <label class="col-sm-3 col-form-label">
-                    Description
-                    <label style="content: '*'; color: red">*</label>
-                </label>
-                <input class="col-md-6" required minlength="4" type="text" name="description"
-                    [(ngModel)]="service.formData.description" />
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-3 col-form-label">
-                    Amount</label>
-                    <label style="content: '*'; color: red">*</label>
-                    <mat-form-field floatLabel="always">
-                        <mat-label>Amount</mat-label>
-                        <input matInput type="number" class="example-right-align" placeholder="0">
-                        <span matTextPrefix>$&nbsp;</span>
-                        <span matTextSuffix>.00</span>
-                    </mat-form-field>
-            </div>
-            <div class="form-group row">
-                <label class="col-sm-3 col-form-label">
-                    Password <label style="content: '*'; color: red">*</label>
-                </label>
-                <mat-form-field [color]="colorControl.value!">
-                    <mat-label>Color</mat-label>
-                    <mat-select [formControl]="colorControl">
-                      <mat-option value="primary">Primary</mat-option>
-                      <mat-option value="accent">Accent</mat-option>
-                      <mat-option value="warn">Warn</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                <input class="col-md-6" required minlength="4" type="text" name="password"
-                    [(ngModel)]="" />
-            </div>
+    <p-calendar formControlName="date" placeholder="Date" class="py-2 mb-2 custom-width"></p-calendar>
 
-            <div class="text-left text-danger">
-                Please enter required fields.
-            </div>
-        </div>
-        <button class="MT-4" mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
-            Submit
-        </button>
-    </form>
-</div> -->
+    <p-button label="+ Add" type="submit" value="submit" [rounded]="true" class="mb-2 submit-btn custom-width"></p-button>
+</form>

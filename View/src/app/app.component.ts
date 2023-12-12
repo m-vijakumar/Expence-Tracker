@@ -14,6 +14,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
+import { MenuItem } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
@@ -29,7 +30,6 @@ export class AppComponent implements OnInit {
   isLoggedIn?: boolean = false;
   UserName = new Observable<string>(undefined);
   myControl = new FormControl();
-
   filteredOptions!: Observable<string[]>;
   constructor(
     private dialog: MatDialog,
@@ -41,6 +41,7 @@ export class AppComponent implements OnInit {
   ) {
     this.authservice.isLoggedIn = false;
   }
+  
   ngOnInit(): void {
     if (localStorage.getItem('authToken')) {
       const authToken = localStorage.getItem('authToken') || ' ';
@@ -68,6 +69,8 @@ export class AppComponent implements OnInit {
       console.log(this.userData.isLoggedIn == false)
       this.router.navigate(['/dashboard']);
     }
+
+
   }
 
   onLogin() {
@@ -88,14 +91,37 @@ export class AppComponent implements OnInit {
   }
 
   onLogout() {
-    this.authservice.logout();
-    this.router.navigate(['/']);
-    this.snackBar.open('logout', '', {
-      duration: 3000,
-      verticalPosition: 'top',
-    });
+    this.authservice.logout().subscribe((res)=>{
+      this.router.navigate(['/']);
+      this.snackBar.open('logout', '', {
+        duration: 3000,
+        verticalPosition: 'top',
+      });
+    })
+    
     // this.router.navigate(['/login']);
+    
   }
 
 
+  items = [
+    {
+        label: this.userData.userName,
+        items: [
+            {
+                label: 'Edit Account',
+                icon: 'pi pi-user-edit',
+                command: () => {
+                    // this.update();
+                }
+            },
+            {
+                label: 'Logout',
+                icon: 'pi pi-sign-out',
+                command: () => {
+                  this.onLogout();
+                }
+            }
+        ]
+    }]
 }

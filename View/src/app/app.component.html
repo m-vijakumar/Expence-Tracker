@@ -1,6 +1,6 @@
-<mat-toolbar class="navbar">
+<!-- <mat-toolbar class="navbar">
 
-  <ng-container style="justify-content: baseline;" >
+  <ng-container  class="justify-content-start m-4" >
     <h1>Expense Tracker</h1>
   </ng-container>
 
@@ -20,7 +20,7 @@
 
     </ng-container >
 
-    <ng-container *ngIf="userData.isLoggedIn">
+    <ng-container *ngIf="userData.isLoggedIn" style="height: .3rem;">
 
       <mat-form-field style="font-size: xx-small;">
         <mat-label>{{userData.userName}} Vijay Kumar</mat-label>
@@ -34,5 +34,35 @@
 
 
 
-</mat-toolbar>
+</mat-toolbar> -->
+
+<div class="coninter mx-2" >
+  <p-toolbar styleClass="p-1 sticky-top">
+    <div class="p-toolbar-group-start pl-4 pt-1">
+      <h1 style="font-size: xx-large;">Expense Tracker</h1>
+    </div>
+  
+    <div class="p-toolbar-group-center">
+    </div>
+
+    <div class="p-toolbar-group-end">
+      <ng-container *ngIf="!userData.isLoggedIn">
+        <div>
+          <button class="m-1 btn btn-light btn-outline-primary" mat-raised-button (click)="onLogin()" Button>
+           Login
+         </button>
+   
+         <button class="m-1 btn btn-light btn-outline-primary" mat-raised-button (click)="onRegister()" Button>
+           Sign up
+         </button>
+        </div>
+      </ng-container>
+      <ng-container *ngIf="userData.isLoggedIn" class="p-4">
+        
+        <p-avatar icon="pi pi-user" fontsize="3.rem" size="large" (click)="menu.toggle($event)" lable="userData.userName">{{userData.userName}}</p-avatar>
+        <p-menu #menu [model]="items" [popup]="true"></p-menu>
+      </ng-container>
+    </div>
+  </p-toolbar>
+</div>
 <router-outlet></router-outlet>

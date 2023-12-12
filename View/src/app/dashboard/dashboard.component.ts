@@ -6,8 +6,7 @@ import { UserService } from '../services/user.service';
 import { SubscriptionService } from '../services/subscription.service';
 import { Router } from '@angular/router';
 import { User } from '../models/user-models';
-import { LoginComponent } from '../login/login.component';
-import { text } from 'body-parser';
+
 
 @Component({
   selector: 'app-dashboard',
@@ -59,7 +58,7 @@ export class DashboardComponent implements OnInit {
         );
         console.log(transactionsList);
         this.transactions = transactionsList.data.transactions;
-        console.log(this.transactions[0].amount);
+        console.log(this.transactions);
       }
     }
 
@@ -83,6 +82,6 @@ export class DashboardComponent implements OnInit {
       },
     };
 
-    //this.transactions = [1,2,3,4,5,6 , 7];
+    // this.transactions = [1,2,3,4,5,6 , 7];
   }
 }

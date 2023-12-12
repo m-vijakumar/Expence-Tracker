@@ -1,26 +1,8 @@
-.container {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    -webkit-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-    width: 80%;
-    background-color: transparent;
-  }
 
-  
-  .navbar {
-    justify-content: space-between;
-    background-color: transparent;
-  }
+p-toolbar{
+  background-color: transparent;
+}
 
-  .navbar > div {
-    padding-right: 1rem;
-  }
-  .navbar > ng-container {
-    padding-right: 1rem;
-  }
-  
   ::ng-deep .mat-input-wrapper {
     width: 400px !important;
   }

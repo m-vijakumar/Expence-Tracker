@@ -1,0 +1,6 @@
+::ng-deep .custom-width input{
+    width: 200px !important;/* Adjust the width as needed */
+}
+::ng-deep .input-styling input {
+    width: 20px !important;
+  }

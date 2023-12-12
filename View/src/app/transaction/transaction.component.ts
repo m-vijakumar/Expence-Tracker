@@ -1,9 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgModule } from '@angular/core';
 import { TransactionService } from '../services/transaction.service';
-import { MatDialogRef } from '@angular/material/dialog';
-import { LoginComponent } from '../login/login.component';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-transaction',
@@ -13,17 +11,42 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class TransactionComponent implements OnInit{
 
   constructor(
-    services : TransactionService,
-    public dialogbox: MatDialogRef<LoginComponent>,
-    private snackBar: MatSnackBar,
-    private router: Router,
-    private route: ActivatedRoute
+    public service : TransactionService,
+    private snackBar: MatSnackBar
 
     ){
 
   }
+  stateOptions: any[] = [
+    { label: 'Income', value: 'income' },
+    { label: 'Expense', value: 'expense' }
+];
+
+categories = ['Travel', 'Grocery', 'Rent', 'Mortgages', 'Entertainment', 'Insurance', 'Others' ]
   ngOnInit(): void {
+    this.transactionForm.reset()
+  }
+
+  transactionForm: FormGroup = new FormGroup({
+    description: new FormControl(''),
+    type: new FormControl(''),
+    amount: new FormControl(),
+    category: new FormControl('income'),
+    date: new FormControl()
     
+  })
+  
+  //Using Reactive form to add Transaction
+  addTransaction(){
+    this.service.addTransaction(this.transactionForm.value).subscribe((res)=>{
+      this.snackBar.open(res.toString(), '', {
+        duration: 3000,
+        verticalPosition: 'top',
+      });
+    })
+    this.transactionForm.reset()
+
+
   }
 
 }

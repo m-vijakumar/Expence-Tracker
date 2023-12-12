@@ -1,42 +1,52 @@
 <div class="row">
     <!-- Transaction Add -->
     <div class="col-sm-12 col-md-4">
-        <div class="card">
-            <h6>ADD/Update Transation</h6>
-        </div>
-        <p-divider></p-divider>
-        <div class="d-flex flex-coliumn align-items-center">
-            <!-- <p-selectButton [options]="cities" [(ngModel)]="selectedCity" optionLabel="name"></p-selectButton> -->
+        <div class="card shadow-lg m-2 p-2">
+            <div class="d-flex align-self-center">
+                <h1>ADD/Update Transaction</h1>
+            </div>
+            <p-divider></p-divider>
+            <app-transaction></app-transaction>
         </div>
     </div>
 
     <!-- Transaction Chart -->
     <div class="col-sm-12 col-md-4">
-
-        <div class=" flex justify-content-center">
-            <p-chart type="doughnut" [data]="this.chartData" [options]="this.chartOptions"></p-chart>
+        <div class="card shadow-lg m-2">
+            <div class="d-flex justify-content-center">
+                <h1 class="">3000</h1>
+            </div>
+        </div>
+        <div class="p-3"></div>
+        <div class="card shadow-lg mb-4">
+            <div class="flex justify-content-center">
+                <p-chart type="doughnut" [data]="this.chartData" [options]="this.chartOptions"></p-chart>
+            </div>
         </div>
     </div>
     <!-- Transactions List -->
     <div class="col-sm-12 col-md-4">
-        <div class="card">
-
-            <h6>Transations</h6>
+        <div class="card shadow-lg m-2 p-2">
+            <div class="d-flex align-items-center justify-content-around">
+                <h1 class="">Transactions</h1>
+            </div>
             <p-divider></p-divider>
-            <p-virtualScroller [value]="transactions" scrollHeight="300px" [itemSize]="50">
+            <p-virtualScroller [value]="transactions" scrollHeight="500px" [itemSize]="70">
                 <ng-template let-transaction pTemplate="item">
-                    <p-card>
-                        <div>
-                            <div>
-                                <div>
-                                    <i class="pi pi-credit-card"></i>
-                                    <span>{{transaction.amount}}</span>
-                                </div>
+                        <div class="d-flex justify-content-between align-item-center">
+                            <div class="p-2 flex-column">
+                                <h1></h1>
+                                <i class="pi pi-credit-card" style="font-size: 1.3rem">
+                                    <span style="font-size: 2rem" class="p-2">{{ transaction.description }}</span>
+                                </i>
+                            </div>
+
+                            <div class="d-flex align-self-center flex-column">
+                                <span style="font-size: larger">${{ transaction.amount }}</span>
+                                <span>{{ transaction.date | date : "MMM yy" }}</span>
                             </div>
                         </div>
-                    </p-card>
                 </ng-template>
-
             </p-virtualScroller>
         </div>
     </div>

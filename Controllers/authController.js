@@ -120,6 +120,7 @@ exports.login = async (req, res) => {
 exports.logout = async (req, res) => {
   try {
     //delete req.session.user;
+    console.log("in logout")
     req.session.destroy();
     return res.json({
       error: false,

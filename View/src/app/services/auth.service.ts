@@ -1,9 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user-models';
 import { SubscriptionService } from './subscription.service';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { response } from 'express';
 
 @Injectable({
   providedIn: 'root'
@@ -86,10 +87,22 @@ export class AuthService {
   }
 
   logout() {
-    localStorage.clear();
-    this.isLoggedIn = false;
-    this.resetSubscription();
-    return 'logout';
+    
+    var authHeader = new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem('authToken'),
+    });
+    
+    return this.http.delete<any>(this.APIUrl + '/logout', { headers: authHeader }).pipe(
+      map((response)=>{
+        console.log("in auth services")
+        console.log(response)
+        localStorage.clear();
+        this.isLoggedIn = false;
+        this.resetSubscription();
+        return 'logout';
+      })
+    )
+    
   }
 
 

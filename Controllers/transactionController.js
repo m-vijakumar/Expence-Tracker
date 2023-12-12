@@ -18,11 +18,12 @@ exports.getAllTranscations = async (req, res) => {
 };
 
 exports.create = async (req, res) => {
-  const { description, amount, category, date } = req.body;
+  const { description, amount,type, category, date } = req.body;
 
   const transcationData = {
     description: description,
     amount: amount,
+    type: type,
     category: category,
     date: date,
   };

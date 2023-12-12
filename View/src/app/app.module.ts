@@ -23,6 +23,7 @@ import { AuthService } from './services/auth.service';
 import { UserService } from './services/user.service';
 import { SubscriptionService } from './services/subscription.service';
 import { TransactionComponent } from './transaction/transaction.component';
+import { TransactionService } from './services/transaction.service';
 
 
 
@@ -53,6 +54,7 @@ import { TransactionComponent } from './transaction/transaction.component';
   providers: [
     AuthService,
     UserService,
+    TransactionService,
     SubscriptionService,
   ],
   bootstrap: [AppComponent],
