@@ -22,15 +22,9 @@ import { MenuItem } from 'primeng/api';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  userId: any;
-  userDataSubscription: any;
-  authdata:any;
   userData = new User();
-  title = 'Expence Tracker';
   isLoggedIn?: boolean = false;
-  UserName = new Observable<string>(undefined);
-  myControl = new FormControl();
-  filteredOptions!: Observable<string[]>;
+
   constructor(
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
@@ -41,36 +35,41 @@ export class AppComponent implements OnInit {
   ) {
     this.authservice.isLoggedIn = false;
   }
-  
+
   ngOnInit(): void {
+    //check auth token from local storage and add data to subscription user data
     if (localStorage.getItem('authToken')) {
       const authToken = localStorage.getItem('authToken') || ' ';
       if (authToken) {
         const decodeUserDetails: any = JSON.parse(
           atob(authToken.split('.')[1])
         );
-        console.log(decodeUserDetails)
-        this.userData.userId = decodeUserDetails.data.id;
-        this.userData.userName = decodeUserDetails.username;
-        this.userData.isLoggedIn = true;
-        
-        this.subscriptionService.userData.next(this.userData);
-        }
+        console.log(decodeUserDetails);
+
+        // update the User Scbscription Data 
+        this.subscriptionService.userData.next({
+          userId: decodeUserDetails.data.id,
+          userName: decodeUserDetails.data.username,
+          isLoggedIn: true,
+          email: undefined,
+          password: undefined
+        });
+      }
     }
-    this.userDataSubscription = this.subscriptionService.userData
+
+    // Subscribe the User Subscription Data.
+    this.subscriptionService.userData
       .asObservable()
       .subscribe((data) => {
         
         this.userData = data;
       });
-    console.log(this.userData);
+      console.log(this.userData)
 
-    if (!(this.userData.isLoggedIn == true)) {
-      console.log(this.userData.isLoggedIn == false)
+    // checking user is LoggedIn or Not
+    if (this.userData.isLoggedIn == true) {
       this.router.navigate(['/dashboard']);
     }
-
-
   }
 
   onLogin() {
@@ -78,7 +77,6 @@ export class AppComponent implements OnInit {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '40%';
-
     this.dialog.open(LoginComponent, dialogConfig);
   }
 
@@ -91,37 +89,35 @@ export class AppComponent implements OnInit {
   }
 
   onLogout() {
-    this.authservice.logout().subscribe((res)=>{
+    this.authservice.logout().subscribe(async(res) => {
       this.router.navigate(['/']);
       this.snackBar.open('logout', '', {
         duration: 3000,
         verticalPosition: 'top',
       });
-    })
-    
-    // this.router.navigate(['/login']);
-    
+    });
   }
 
-
+  // items for toolbar (UserName)
   items = [
     {
-        label: this.userData.userName,
-        items: [
-            {
-                label: 'Edit Account',
-                icon: 'pi pi-user-edit',
-                command: () => {
-                    // this.update();
-                }
-            },
-            {
-                label: 'Logout',
-                icon: 'pi pi-sign-out',
-                command: () => {
-                  this.onLogout();
-                }
-            }
-        ]
-    }]
+      label: this.userData.userName,
+      items: [
+        {
+          label: 'Edit Account',
+          icon: 'pi pi-user-edit',
+          command: () => {
+            // this.update();
+          },
+        },
+        {
+          label: 'Logout',
+          icon: 'pi pi-sign-out',
+          command: () => {
+            this.onLogout();
+          },
+        },
+      ],
+    },
+  ];
 }

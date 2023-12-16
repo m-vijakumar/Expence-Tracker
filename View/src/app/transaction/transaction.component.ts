@@ -2,6 +2,8 @@ import { Component, OnInit, NgModule } from '@angular/core';
 import { TransactionService } from '../services/transaction.service';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { SubscriptionService } from '../services/subscription.service';
+import { User } from '../models/user-models';
 
 @Component({
   selector: 'app-transaction',
@@ -10,9 +12,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class TransactionComponent implements OnInit{
 
+  userData = new User();
   constructor(
     public service : TransactionService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private subscriptionService: SubscriptionService,
 
     ){
 
@@ -25,8 +29,16 @@ export class TransactionComponent implements OnInit{
 categories = ['Travel', 'Grocery', 'Rent', 'Mortgages', 'Entertainment', 'Insurance', 'Others' ]
   ngOnInit(): void {
     this.transactionForm.reset()
-  }
 
+    this.subscriptionService.userData
+      .asObservable()
+      .subscribe((data) => {
+        
+        this.userData = data;
+      });
+      console.log(this.userData)
+  }
+ 
   transactionForm: FormGroup = new FormGroup({
     description: new FormControl(''),
     type: new FormControl(''),

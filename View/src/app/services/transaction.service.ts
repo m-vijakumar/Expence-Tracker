@@ -22,28 +22,54 @@ export class TransactionService {
 
   readonly authHeader = new HttpHeaders({
     Authorization: 'Bearer ' + localStorage.getItem('authToken'),
-  });
+  });    
 
-  private _listeners = new Subject<any>();
+  // private _listeners = new Subject<any>();
   
-  listen(): Observable<any> {
-    return this._listeners.asObservable();
+  // listen(): Observable<any> {
+  //   return this._listeners.asObservable();
+  // }
+
+  private _refreshRequried = new Subject<void>();
+
+  get RefreshRequried(){
+    return this._refreshRequried;
+  }
+  
+
+  setTransactionList(data:any){
+    const authToken = localStorage.getItem('authToken');
+    if(authToken){
+      this.subscriptionService.transactionsList.next(data)
+    }
+  }
+
+  getAllTransactions(){
+     return this.http.get<any>(this.APIUrl+ '/all-transaction', {headers: this.authHeader}).pipe(
+      map((response)=>{
+        console.log("in get all transaction ")
+        console.log(response)
+        this.setTransactionList(response.data)
+        return response
+       
+      })
+    )
   }
 
   addTransaction(transaction: Transaction){
     console.log("transaction service")
+    
     console.log(transaction)
     return this.http.post<any>(this.APIUrl+ '/add', transaction, { headers: this.authHeader }).pipe(
-      map((response)=>{
+      map(async(response)=>{
         console.log(response)
+        this.RefreshRequried.next();
         return response;
       })
-    )
+    ) 
   }
   
-  getAllTransactions(){
-
-  }
+  
 
 
 }

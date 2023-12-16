@@ -13,14 +13,39 @@
     <!-- Transaction Chart -->
     <div class="col-sm-12 col-md-4">
         <div class="card shadow-lg m-2">
-            <div class="d-flex justify-content-center">
-                <h1 class="">3000</h1>
+            <div class="col ">       
+                    <h2 class="text-center pt-3">Total Balance</h2>
+                <h1 class="text-center p-3 " style="font-size: xx-large;">$3000</h1>
+                <div class="d-flex justify-content-between">
+                    <div class="row align-items-center px-2">
+                        <div class="col">
+                            <i class="pi pi-arrow-circle-down" style="font-size: 2rem; color: #00FF3F;"></i>
+                        </div>
+                        <div class="col">
+                            <span style="font-size: large;">Income</span>
+                                <h2>$4000</h2>
+                        </div>
+                    </div>
+
+                    <div class="row align-items-center px-2">
+                        <div class="col">
+                            <i class="pi pi-arrow-circle-up" style="font-size: 2rem; color: #FF3200;"></i>
+                        </div>
+                        <div class="col">
+                            <span style="font-size: large;">Expense</span>
+                            <h2>$4000</h2>
+                        </div>
+                        
+                    </div>
+
+                </div>
             </div>
         </div>
-        <div class="p-3"></div>
-        <div class="card shadow-lg mb-4">
-            <div class="flex justify-content-center">
-                <p-chart type="doughnut" [data]="this.chartData" [options]="this.chartOptions"></p-chart>
+        
+        <div class="p-3 m-2"></div>
+        <div class="card shadow-lg m-2">
+            <div class="d-flex justify-content-center ">
+                <p-chart type="doughnut" [data]="chartData" [options]="chartOptions"></p-chart>
             </div>
         </div>
     </div>
@@ -37,13 +62,13 @@
                             <div class="p-2 flex-column">
                                 <h1></h1>
                                 <i class="pi pi-credit-card" style="font-size: 1.3rem">
-                                    <span style="font-size: 2rem" class="p-2">{{ transaction.description }}</span>
+                                    <span style="font-size: 1.7rem" class="p-2">{{ transaction.description }}</span>
                                 </i>
                             </div>
 
                             <div class="d-flex align-self-center flex-column">
-                                <span style="font-size: larger">${{ transaction.amount }}</span>
-                                <span>{{ transaction.date | date : "MMM yy" }}</span>
+                                <span style="font-size: large">${{ transaction.amount }}</span>
+                                <span>{{ transaction.date | date : " dd MMM" }}</span>
                             </div>
                         </div>
                 </ng-template>

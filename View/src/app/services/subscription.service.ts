@@ -12,4 +12,6 @@ export class SubscriptionService {
   userData = new BehaviorSubject<User>(new User());
 
   transaction = new BehaviorSubject<Transaction>(new Transaction());
+
+  transactionsList = new BehaviorSubject<Array<Transaction>>([]);
 }
