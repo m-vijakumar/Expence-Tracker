@@ -1,51 +1,16 @@
-<!-- <mat-toolbar class="navbar">
-
-  <ng-container  class="justify-content-start m-4" >
-    <h1>Expense Tracker</h1>
-  </ng-container>
-
-
-  <ng-container >
-    
-    <ng-container *ngIf="!userData.isLoggedIn">
-     <div>
-       <button class="m-1 btn btn-light btn-outline-primary" mat-raised-button (click)="onLogin()" Button>
-        Login
-      </button>
-
-      <button class="m-1 btn btn-light btn-outline-primary" mat-raised-button (click)="onRegister()" Button>
-        Sign up
-      </button>
-     </div>
-
-    </ng-container >
-
-    <ng-container *ngIf="userData.isLoggedIn" style="height: .3rem;">
-
-      <mat-form-field style="font-size: xx-small;">
-        <mat-label>{{userData.userName}} Vijay Kumar</mat-label>
-        <mat-select>
-          <mat-option (click)="onLogout()">Logout</mat-option>
-        </mat-select>
-      </mat-form-field>
-
-    </ng-container>
-  </ng-container>
-
-
-
-</mat-toolbar> -->
 
 <div class="coninter mx-2" >
-  <p-toolbar styleClass="p-1 sticky-top">
-    <div class="p-toolbar-group-start pl-4 pt-1">
-      <h1 style="font-size: xx-large;">Expense Tracker</h1>
+  <p-toolbar styleClass="p-1 sticky-top ui-toolbar ">
+    <div class="p-toolbar-group-start">
+      <p-avatar image="https://play-lh.googleusercontent.com/_IA1p-kzpnDyoutaCf9gxWME1fc76UpoLhtvm-5K3Aainu-U0ClZYS8ug-4stKjZu_s" styleClass="mr-2" size="xlarge" shape="circle"></p-avatar>
+      
     </div>
   
-    <div class="p-toolbar-group-center">
+    <div class="p-toolbar-group-center  pl-4 pt-1">
+      <h1 style="font-size: 2.5rem;">Expense Tracker</h1>
     </div>
 
-    <div class="p-toolbar-group-end">
+    <div class="p-toolbar-group-end mr-2">
       <ng-container *ngIf="!userData.isLoggedIn">
         <div>
           <button class="m-1 btn btn-light btn-outline-primary" mat-raised-button (click)="onLogin()" Button>
@@ -57,11 +22,25 @@
          </button>
         </div>
       </ng-container>
-      <ng-container *ngIf="userData.isLoggedIn" class="p-4">
+      <ng-container *ngIf="userData.isLoggedIn" >
+      
+          <p-avatar icon="pi pi-user" (click)="menu.toggle($event)" size="large" styleClass="cursor: pointer;">
+              <!-- <span class="text-base">{{userData.userName}}</span> -->
+          </p-avatar>
+          <p-menu #menu [model]="items" [popup]="true"></p-menu>
+
         
-        <p-avatar icon="pi pi-user" fontsize="3.rem" size="large" (click)="menu.toggle($event)" lable="userData.userName">{{userData.userName}}</p-avatar>
-        <p-menu #menu [model]="items" [popup]="true"></p-menu>
       </ng-container>
+    </div>
+  </p-toolbar>
+
+  <p-toolbar styleClass=" p-1 fixed-bottom">
+    <div class="p-toolbar-group-start">
+    </div>
+    <div class="p-toolbar-group-center">
+      <span > &copy; Vijay Kumar Munukoti</span>
+    </div>
+    <div class="p-toolbar-group-end">
     </div>
   </p-toolbar>
 </div>

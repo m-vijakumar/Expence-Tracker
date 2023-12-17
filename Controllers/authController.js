@@ -32,7 +32,7 @@ exports.register = async (req, res) => {
         const token =  jwt.sign({
           data: userData
         }, secert,
-        { expiresIn: 60 * 60 });
+        { expiresIn: 60 * 60 * 60});
   
         return res.json({
           error: false,
@@ -87,12 +87,12 @@ exports.login = async (req, res) => {
      const authToken =  jwt.sign({
         data: payload
       }, secert,
-      { expiresIn: 60 * 60 });
+      { expiresIn: 60 * 60 *60 });
 
       const transactionsToken =  jwt.sign({
         data: transactionsPayload
       }, secert,
-      { expiresIn: 60 * 60 });
+      { expiresIn: 60 * 60 * 60 });
 
       console.log(payload)
       req.session.user = payload;

@@ -24,6 +24,7 @@ import { MenuItem } from 'primeng/api';
 export class AppComponent implements OnInit {
   userData = new User();
   isLoggedIn?: boolean = false;
+  items: MenuItem[] | undefined;
 
   constructor(
     private dialog: MatDialog,
@@ -46,6 +47,7 @@ export class AppComponent implements OnInit {
         );
         console.log(decodeUserDetails);
 
+        
         // update the User Scbscription Data 
         this.subscriptionService.userData.next({
           userId: decodeUserDetails.data.id,
@@ -66,6 +68,28 @@ export class AppComponent implements OnInit {
       });
       console.log(this.userData)
 
+      this.items = [
+        {
+          label: this.userData.userName,
+          items: [
+            {
+              label: 'Edit Account',
+              icon: 'pi pi-user-edit',
+              command: () => {
+                // this.update();
+              },
+            },
+            {
+              label: 'Logout',
+              icon: 'pi pi-sign-out',
+              command: () => {
+                this.onLogout();
+              },
+            },
+          ],
+        },
+      ];
+      
     // checking user is LoggedIn or Not
     if (this.userData.isLoggedIn == true) {
       this.router.navigate(['/dashboard']);
@@ -99,25 +123,5 @@ export class AppComponent implements OnInit {
   }
 
   // items for toolbar (UserName)
-  items = [
-    {
-      label: this.userData.userName,
-      items: [
-        {
-          label: 'Edit Account',
-          icon: 'pi pi-user-edit',
-          command: () => {
-            // this.update();
-          },
-        },
-        {
-          label: 'Logout',
-          icon: 'pi pi-sign-out',
-          command: () => {
-            this.onLogout();
-          },
-        },
-      ],
-    },
-  ];
+
 }

@@ -11,6 +11,9 @@
 @import "primeicons/primeicons.css";
 body {
     background-color: rgba(10, 88, 127, 0.502);
-    overflow-x: hidden;
+    /* overflow-x: hidden; */
 
   }
+  body .ui-button.rounded-button {
+    border-radius: 2rem;
+}

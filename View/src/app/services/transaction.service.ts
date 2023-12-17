@@ -24,12 +24,6 @@ export class TransactionService {
     Authorization: 'Bearer ' + localStorage.getItem('authToken'),
   });    
 
-  // private _listeners = new Subject<any>();
-  
-  // listen(): Observable<any> {
-  //   return this._listeners.asObservable();
-  // }
-
   private _refreshRequried = new Subject<void>();
 
   get RefreshRequried(){
@@ -69,7 +63,21 @@ export class TransactionService {
     ) 
   }
   
-  
+  updateTransaction(transactionId : number){
+
+  }
+
+  deleteTransaction(transactionId : number){
+    console.log("in service delete transaction")
+    console.log(transactionId)
+    return this.http.put<any>(this.APIUrl+ '/delete', {transactionId: transactionId}, { headers: this.authHeader }).pipe(
+      map(async(response)=>{
+        console.log(response)
+        this.RefreshRequried.next();
+        return response;
+      })
+    ) 
+  }
 
 
 }

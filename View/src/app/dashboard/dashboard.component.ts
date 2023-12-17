@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../services/auth.service';
@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import { User } from '../models/user-models';
 import { TransactionService } from '../services/transaction.service';
 import { Subject } from 'rxjs';
+import { MenuItem } from 'primeng/api';
 
 
 @Component({
@@ -23,8 +24,10 @@ export class DashboardComponent implements OnInit {
   chartOptions: any;
   transactions: any;
   categoryCounts: any = {};
+  balance: any ={};
   userDataSubscription: any;
-  
+  showIcons = false;
+
   constructor(
     private dialog: MatDialog,
     private snackBar: MatSnackBar,
@@ -52,6 +55,7 @@ export class DashboardComponent implements OnInit {
     if (!(this.userData.isLoggedIn == true)) {
       this.router.navigate(['/']);
     }
+
     await this.transactionService.getAllTransactions().subscribe((res)=>{
       console.log(res)
     })
@@ -63,19 +67,25 @@ export class DashboardComponent implements OnInit {
     await this.subscriptionService.transactionsList
       .asObservable()
       .subscribe((data) => {
+        data.forEach((transaction: any) => {
+
+          const type = transaction.type;
+          const balanceAmount = transaction.amount || 0;
+          const category = transaction.category;
+          const totalAmount = transaction.amount || 0;
+          this.categoryCounts[category] = (this.categoryCounts[category] || 0) + totalAmount;
+          this.balance[type] = (this.balance[type] || 0) + balanceAmount;
+        });
+        
         this.transactions =  data.sort((a: any, b: any) => {
           const dateA = new Date(b.date).getTime();
           const dateB = new Date(a.date).getTime();
           return dateA - dateB;
         });
 
-          data.forEach((transaction: any) => {
-
-            const category = transaction.category;
-            const totalAmount = transaction.amount || 0;
-            this.categoryCounts[category] = (this.categoryCounts[category] || 0) + totalAmount;
-          });
+           
           console.log(this.categoryCounts)
+          console.log(this.balance)
           console.log(Object.values(this.categoryCounts))
 
           this.chartData = {
@@ -100,7 +110,10 @@ export class DashboardComponent implements OnInit {
             }
         }
 
+        
+
       });
+
 
 
   }
@@ -128,5 +141,16 @@ export class DashboardComponent implements OnInit {
     console.log(this.categoryCounts)
     console.log(Object.keys(this.categoryCounts))
     console.log(Object.values(this.categoryCounts))
+  }
+  updateTransaction(transaction:any){
+    console.log("in update Transaction")
+    console.log(transaction)
+  }
+  deleteTransaction(transaction:any){
+    this.transactionService.deleteTransaction(transaction._id).subscribe((res)=>{
+
+    })
+    console.log("in delete Transaction")
+    console.log(transaction)
   }
 }

@@ -59,10 +59,10 @@ exports.create = async (req, res) => {
 };
 
 exports.deleteTranscation = async (req, res) => {
-    console.log( "Wefaef" + req.body.postId  )
+    console.log( "Wefaef" + req.body.transactionId  )
     await User.updateOne(
       { _id: req.user.id},
-      { $pull: {Transactions: { _id: req.body.postId  }  } } )
+      { $pull: {Transactions: { _id: req.body.transactionId  }  } } )
       .then((result) => {
         console.log(result)
         res.json({

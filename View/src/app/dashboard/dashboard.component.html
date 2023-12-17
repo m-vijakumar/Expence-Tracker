@@ -15,7 +15,7 @@
         <div class="card shadow-lg m-2">
             <div class="col ">       
                     <h2 class="text-center pt-3">Total Balance</h2>
-                <h1 class="text-center p-3 " style="font-size: xx-large;">$3000</h1>
+                <h1 class="text-center p-3 " style="font-size: xx-large;">$ {{balance.income - balance.expense}}</h1>
                 <div class="d-flex justify-content-between">
                     <div class="row align-items-center px-2">
                         <div class="col">
@@ -23,7 +23,7 @@
                         </div>
                         <div class="col">
                             <span style="font-size: large;">Income</span>
-                                <h2>$4000</h2>
+                                <h2>${{balance.income}}</h2>
                         </div>
                     </div>
 
@@ -33,7 +33,7 @@
                         </div>
                         <div class="col">
                             <span style="font-size: large;">Expense</span>
-                            <h2>$4000</h2>
+                            <h2>${{balance.expense}}</h2>
                         </div>
                         
                     </div>
@@ -50,29 +50,46 @@
         </div>
     </div>
     <!-- Transactions List -->
+
     <div class="col-sm-12 col-md-4">
+        
         <div class="card shadow-lg m-2 p-2">
-            <div class="d-flex align-items-center justify-content-around">
+           
+            <div class="d-flex align-self-center">
+               
                 <h1 class="">Transactions</h1>
             </div>
             <p-divider></p-divider>
-            <p-virtualScroller [value]="transactions" scrollHeight="500px" [itemSize]="70">
-                <ng-template let-transaction pTemplate="item">
-                        <div class="d-flex justify-content-between align-item-center">
+            <!-- <p-menu #menu [model]="transactionOptions" [popup]="true"></p-menu> -->
+            <p-scroller [items]="transactions" scrollHeight="600px" [itemSize]="70"   style="cursor: pointer;">
+                <ng-template  let-transaction pTemplate="item"  >
+                    
+                        <div  class=" shadow-sm d-flex justify-content-between align-item-center hover-container "  (mouseenter)="showIcons = true" (mouseleave)="showIcons = false" >
                             <div class="p-2 flex-column">
                                 <h1></h1>
                                 <i class="pi pi-credit-card" style="font-size: 1.3rem">
                                     <span style="font-size: 1.7rem" class="p-2">{{ transaction.description }}</span>
                                 </i>
                             </div>
-
-                            <div class="d-flex align-self-center flex-column">
+                            <div class="flex-column  align-self-center">
+                                <div style="position: absolute; " class=" d-flex  align-item-center">
+                                  
+                                    <p-button icon="pi pi-pencil" [rounded]="true" [text]="true"  class="icon-button" (click)="updateTransaction(transaction)"></p-button>
+                                    <p-button icon="pi pi-times" [rounded]="true" [text]="true" severity="danger " class="icon-button" (click)="deleteTransaction(transaction)"></p-button>
+                                </div>
+                            </div>
+                            <div class="d-flex align-self-center flex-column pr-2">
+                                
                                 <span style="font-size: large">${{ transaction.amount }}</span>
                                 <span>{{ transaction.date | date : " dd MMM" }}</span>
+                                
                             </div>
+                           
+                            
                         </div>
                 </ng-template>
-            </p-virtualScroller>
+            </p-scroller>
+            
         </div>
     </div>
 </div>

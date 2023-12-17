@@ -3,7 +3,7 @@ const router =express.Router();
 const bodyParser = require("body-parser")
 const key = require("../../setup/keys/tokens.js").TOKEN_KEY;
 const helper = require("../../helpers/sessionVerfiy.js")
-const transactionController = require("../../Controllers/TransactionController.js")
+const transactionController = require("../../Controllers/transactionController.js")
 // @type    GET
 //@route    /api/all-transaction
 // @desc    starting router
@@ -24,6 +24,6 @@ router.post("/add", helper.JWTverify, transactionController.create )
 // @desc    starting router
 // @access  PRAVITE
 
-router.delete("/delete", helper.JWTverify, transactionController.deleteTranscation )
+router.put("/delete", helper.JWTverify, transactionController.deleteTranscation )
 
 module.exports = router;

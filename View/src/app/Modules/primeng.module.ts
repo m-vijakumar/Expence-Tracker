@@ -12,6 +12,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { ToolbarModule } from 'primeng/toolbar';
 import { MenuModule } from 'primeng/menu';
 import {AvatarModule} from 'primeng/avatar'
+import { ScrollerModule } from 'primeng/scroller';
+import { ContextMenuModule } from "primeng/contextmenu";
+import { ChipModule } from 'primeng/chip';
 const PrimengComponents = [
     ButtonModule,
     ChartModule,
@@ -25,7 +28,10 @@ const PrimengComponents = [
     DropdownModule,
     ToolbarModule,
     MenuModule,
-    AvatarModule
+    AvatarModule,
+    ScrollerModule,
+    ContextMenuModule,
+    ChipModule
 
 
 ]

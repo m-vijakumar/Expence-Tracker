@@ -1,0 +1,21 @@
+.hover-container {
+    position: relative;
+    justify-content: space-between;
+  }
+  
+  .icon-button {
+    /* position: absolute; */
+    /* top: 50%;
+    left: 50%; */
+    border-radius: 50% !important;
+    transform: translate(-50%, -50%);
+    background: transparent;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: inline-block;
+  }
+  
+  .hover-container:hover .icon-button {
+    opacity: 1;
+  }
