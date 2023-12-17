@@ -5,6 +5,9 @@ import { Transaction } from '../models/transaction-model';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { response } from 'express';
+import { AppComponent } from '../app.component';
+import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -13,15 +16,14 @@ export class TransactionService {
 
   constructor(
     private http: HttpClient,
-    private subscriptionService: SubscriptionService
+    private subscriptionService: SubscriptionService,
+    private authService: AuthService,
+    private router:Router
   ) { }
 
   formData!: Transaction;
 
   readonly APIUrl = 'http://localhost:5000/api/transaction';
-
-
-     
 
   private _refreshRequried = new Subject<void>();
 
@@ -47,7 +49,13 @@ export class TransactionService {
      .toPromise()
      .then(response => {
       console.log("in get all transaction ")
-        console.log(response)
+        console.log(response.error)
+        if(response.error == true){ 
+          console.log("response.error == true")
+          this.authService.logout().subscribe(()=>{
+            this.router.navigate(['/']);
+          });
+        }
         this.setTransactionList(response.data)
         return response
      })
@@ -72,12 +80,20 @@ export class TransactionService {
     return this.http.post<any>(this.APIUrl+ '/add', transaction, { headers: authHeader }).pipe(
       map(async(response)=>{
         console.log(response)
+        if(response.error == true){ 
+          console.log("response.error == true")
+          this.authService.logout().subscribe(()=>{
+            this.router.navigate(['/']);
+          });
+        }
         this.RefreshRequried.next();
         return response;
       })
     ) 
   }
-  
+  loginError(){
+    console.log("login error")
+  }
   updateTransaction(transactionId : number){
 
   }
@@ -91,6 +107,12 @@ export class TransactionService {
     return this.http.put<any>(this.APIUrl+ '/delete', {transactionId: transactionId}, { headers: authHeader }).pipe(
       map(async(response)=>{
         console.log(response)
+        if(response.error == true){ 
+          console.log("response.error == true")
+          this.authService.logout().subscribe(()=>{
+            this.router.navigate(['/']);
+          });
+        }
         this.RefreshRequried.next();
         return response;
       })

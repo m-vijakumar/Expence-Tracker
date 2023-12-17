@@ -79,7 +79,7 @@ exports.login = async (req, res) => {
      const authToken =  jwt.sign({
         data: payload
       }, secert,
-      { expiresIn: 60 * 3});
+      { expiresIn: 30});
 
       console.log(payload)
       req.session.user = payload;

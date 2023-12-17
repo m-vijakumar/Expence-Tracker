@@ -39,6 +39,7 @@ export class AuthService {
   // reset User Sunscription Data
   resetSubscription() {
     this.subscriptionService.userData.next(new User());
+    this.subscriptionService.transactionsList.next([])
   }
 
   // Register User By Sending Http Post Request to Backend 
