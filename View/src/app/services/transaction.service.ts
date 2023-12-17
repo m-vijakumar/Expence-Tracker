@@ -20,9 +20,8 @@ export class TransactionService {
 
   readonly APIUrl = 'http://localhost:5000/api/transaction';
 
-  readonly authHeader = new HttpHeaders({
-    Authorization: 'Bearer ' + localStorage.getItem('authToken'),
-  });    
+
+     
 
   private _refreshRequried = new Subject<void>();
 
@@ -38,23 +37,39 @@ export class TransactionService {
     }
   }
 
-  getAllTransactions(){
-     return this.http.get<any>(this.APIUrl+ '/all-transaction', {headers: this.authHeader}).pipe(
-      map((response)=>{
-        console.log("in get all transaction ")
+  getAllTransactions(): Promise<any>{
+
+    var  authHeader = new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem('authToken'),
+    });
+    console.log(localStorage.getItem('authToken'))
+     return this.http.get<any>(this.APIUrl+ '/all-transaction', {headers: authHeader})
+     .toPromise()
+     .then(response => {
+      console.log("in get all transaction ")
         console.log(response)
         this.setTransactionList(response.data)
         return response
+     })
+
+    //  .pipe(
+    //   map((response)=>{
+    //     console.log("in get all transaction ")
+    //     console.log(response)
+    //     this.setTransactionList(response.data)
+    //     return response
        
-      })
-    )
+    //   })
+    // )
   }
 
   addTransaction(transaction: Transaction){
     console.log("transaction service")
-    
+    var  authHeader = new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem('authToken'),
+    });
     console.log(transaction)
-    return this.http.post<any>(this.APIUrl+ '/add', transaction, { headers: this.authHeader }).pipe(
+    return this.http.post<any>(this.APIUrl+ '/add', transaction, { headers: authHeader }).pipe(
       map(async(response)=>{
         console.log(response)
         this.RefreshRequried.next();
@@ -69,8 +84,11 @@ export class TransactionService {
 
   deleteTransaction(transactionId : number){
     console.log("in service delete transaction")
+    var  authHeader = new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem('authToken'),
+    });
     console.log(transactionId)
-    return this.http.put<any>(this.APIUrl+ '/delete', {transactionId: transactionId}, { headers: this.authHeader }).pipe(
+    return this.http.put<any>(this.APIUrl+ '/delete', {transactionId: transactionId}, { headers: authHeader }).pipe(
       map(async(response)=>{
         console.log(response)
         this.RefreshRequried.next();

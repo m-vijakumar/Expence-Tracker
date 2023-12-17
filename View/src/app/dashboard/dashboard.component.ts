@@ -23,8 +23,8 @@ export class DashboardComponent implements OnInit {
   chartData: any;
   chartOptions: any;
   transactions: any;
-  categoryCounts: any = {};
-  balance: any ={};
+  categoryCounts: any;
+  balance: any;
   userDataSubscription: any;
   showIcons = false;
 
@@ -36,7 +36,11 @@ export class DashboardComponent implements OnInit {
     private transactionService: TransactionService,
     private subscriptionService: SubscriptionService,
     private router: Router
-  ) { }
+  ) { 
+
+    this.categoryCounts= {};
+  this.balance={};
+  }
 
  
   async ngOnInit(): Promise<void> {
@@ -56,25 +60,34 @@ export class DashboardComponent implements OnInit {
       this.router.navigate(['/']);
     }
 
-    await this.transactionService.getAllTransactions().subscribe((res)=>{
+    console.log(localStorage.getItem('authToken'))
+    await this.transactionService.getAllTransactions().then(async(res)=>{
       console.log(res)
     })
     //get all Transaction from transactions
-    this.transactionService.RefreshRequried.subscribe((res)=>{   
-      this.getAllTransaction();
+    this.transactionService.RefreshRequried.subscribe(async(res)=>{   
+      await this.getAllTransaction();
     })
 
-    await this.subscriptionService.transactionsList
+    console.log("in line 66")
+    
+    this.subscriptionService.transactionsList
       .asObservable()
-      .subscribe((data) => {
-        data.forEach((transaction: any) => {
+      .subscribe(async(data) => {
+        
+        console.log("number of calls")
+        this.balance ={};
+        this.categoryCounts={};
+        data.forEach(async(transaction: any) => {
 
           const type = transaction.type;
           const balanceAmount = transaction.amount || 0;
           const category = transaction.category;
           const totalAmount = transaction.amount || 0;
-          this.categoryCounts[category] = (this.categoryCounts[category] || 0) + totalAmount;
+          
           this.balance[type] = (this.balance[type] || 0) + balanceAmount;
+          this.categoryCounts[category] = (this.categoryCounts[category] || 0) + totalAmount;
+          
         });
         
         this.transactions =  data.sort((a: any, b: any) => {
@@ -83,7 +96,6 @@ export class DashboardComponent implements OnInit {
           return dateA - dateB;
         });
 
-           
           console.log(this.categoryCounts)
           console.log(this.balance)
           console.log(Object.values(this.categoryCounts))
@@ -120,7 +132,7 @@ export class DashboardComponent implements OnInit {
 
   
   async getAllTransaction(){
-    this.transactionService.getAllTransactions().subscribe((res)=>{
+    await this.transactionService.getAllTransactions().then((res)=>{
       console.log(res)
       
       console.log(this.transactions)
@@ -132,16 +144,29 @@ export class DashboardComponent implements OnInit {
     this.transactions.sort((a: any, b : any) =>  a.amount - b.amount)
         console.log(this.transactions)
   }
-  getChartData(){
-    this.categoryCounts = {};
-    this.transactions.forEach((transaction: any) => {
-      const category = transaction.category;
-      this.categoryCounts[category] = (this.categoryCounts[category] || 0) + 1;
-    });
-    console.log(this.categoryCounts)
-    console.log(Object.keys(this.categoryCounts))
-    console.log(Object.values(this.categoryCounts))
-  }
+  // getChartData(){
+  //   data.forEach((transaction: any) => {
+
+  //     const type = transaction.type;
+  //     const balanceAmount = transaction.amount || 0;
+  //     const category = transaction.category;
+  //     const totalAmount = transaction.amount || 0;
+  //     this.categoryCounts[category] = (this.categoryCounts[category] || 0) + totalAmount;
+  //     this.balance[type] = (this.balance[type] || 0) + balanceAmount;
+  //   });
+    
+  //   this.transactions =  data.sort((a: any, b: any) => {
+  //     const dateA = new Date(b.date).getTime();
+  //     const dateB = new Date(a.date).getTime();
+  //     return dateA - dateB;
+  //   });
+
+       
+  //     console.log(this.categoryCounts)
+  //     console.log(this.balance)
+  //     console.log(Object.values(this.categoryCounts))
+
+  // }
   updateTransaction(transaction:any){
     console.log("in update Transaction")
     console.log(transaction)
