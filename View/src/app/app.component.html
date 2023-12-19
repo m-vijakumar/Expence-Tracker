@@ -1,5 +1,6 @@
 
 <div class="coninter mx-2" >
+  <p-toast position="top-center" ></p-toast>
   <p-toolbar styleClass="p-1 sticky-top ui-toolbar ">
     <div class="p-toolbar-group-start">
       <p-avatar image="https://play-lh.googleusercontent.com/_IA1p-kzpnDyoutaCf9gxWME1fc76UpoLhtvm-5K3Aainu-U0ClZYS8ug-4stKjZu_s" styleClass="mr-2" size="xlarge" shape="circle"></p-avatar>
@@ -23,7 +24,7 @@
         </div>
       </ng-container>
       <ng-container *ngIf="userData.isLoggedIn" >
-      
+        
           <p-avatar icon="pi pi-user" (click)="menu.toggle($event)" size="large" styleClass="cursor: pointer;">
               <!-- <span class="text-base">{{userData.userName}}</span> -->
           </p-avatar>

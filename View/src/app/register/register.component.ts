@@ -3,18 +3,22 @@ import { NgForm } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../services/auth.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.css']
+  styleUrls: ['./register.component.css'],
 })
-export class RegisterComponent implements OnInit{
-
+export class RegisterComponent implements OnInit {
   constructor(
     public dialogbox: MatDialogRef<RegisterComponent>,
     public service: AuthService,
-    private snackBar: MatSnackBar
-  ){}
+    private snackBar: MatSnackBar,
+    private router: Router,
+    private route: ActivatedRoute,
+    private messageService: MessageService
+  ) {}
 
   ngOnInit(): void {
     this.resetForm();
@@ -31,15 +35,29 @@ export class RegisterComponent implements OnInit{
   }
   onClose() {
     this.dialogbox.close();
-    
   }
   onSubmit(form: NgForm) {
-    this.service.register(form.value).subscribe((res) => {
+    const returnUrl =
+      this.route.snapshot.queryParamMap.get('returnUrl') || '/dashboard';
+    this.service.register(form.value).then((res) => {
       this.resetForm(form);
-      this.snackBar.open(res.toString(), '', {
-        duration: 3000,
-        verticalPosition: 'top',
-      });
+      console.log(res);
+      if (res.success == true) {
+        this.messageService.add({
+          severity: 'success',
+          detail: "Welcome",
+        });
+        this.router.navigate([returnUrl]);
+        this.service.isLoggedIn = true;
+        this.dialogbox.close();
+      }else{
+        this.messageService.add({
+          severity: 'error',
+          detail: res.msg,
+        });
+      }
+
+      
     });
   }
 }

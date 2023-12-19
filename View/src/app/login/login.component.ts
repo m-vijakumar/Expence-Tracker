@@ -4,6 +4,7 @@ import { AuthService } from '../services/auth.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -15,7 +16,8 @@ constructor(
     public service: AuthService,
     private snackBar: MatSnackBar,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private messageService: MessageService
   ){}
 
   ngOnInit(): void {
@@ -43,13 +45,21 @@ constructor(
     this.service.login(form.value).subscribe((res) => {
       console.log("Asdas" + res)
       this.resetForm(form);
-      this.snackBar.open('Welcome', '', {
-        duration: 2000,
-        verticalPosition: 'top',
-      });
-      this.router.navigate([returnUrl]);
-      this.service.isLoggedIn = true;
-      this.dialogbox.close();
+      if(res.error == false){
+        this.messageService.add({
+          severity: 'success',
+          detail: "Welcome",
+        });
+        this.router.navigate([returnUrl]);
+        this.service.isLoggedIn = true;
+        this.dialogbox.close();
+      }else{
+        this.messageService.add({
+          severity: 'error',
+          detail: "Incorrect Email or Password",
+        });
+      }
+      
     });
   }
 }

@@ -43,18 +43,20 @@ export class AuthService {
   }
 
   // Register User By Sending Http Post Request to Backend 
-  register(reg: User) {
+  register(reg: User): Promise<any> {
     console.log(reg);
-    return this.http.post<any>(this.APIUrl + '/register', reg).pipe(
-      map((res) => {
-        if (res && res.token) {
+    return  this.http.post<any>(this.APIUrl + '/register', reg)
+    .toPromise()
+    .then(res => {
+        if (res.success == true) {
           localStorage.setItem('authToken', res.authtoken);
           this.setUserDetails();
+          console.log("done in set users")
         }
         console.log(res);
         return res;
       })
-    );
+
   }
 
   private _listeners = new Subject<any>();
@@ -74,9 +76,10 @@ export class AuthService {
         console.log(response);
         if (response) {
           console.log(response.authtoken);
-          localStorage.setItem('authToken', response.authtoken);
-          localStorage.setItem('transactionstoken', response.transactionstoken);
-          this.setUserDetails();
+          if(response.success == true){
+            localStorage.setItem('authToken', response.authtoken);
+            this.setUserDetails();
+          }
           // localStorage.setItem('UserId', response.userId);
         }
         return response;

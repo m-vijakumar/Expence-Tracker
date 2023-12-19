@@ -76,7 +76,7 @@ export class DashboardComponent implements OnInit {
       .subscribe(async(data) => {
         
         console.log("number of calls")
-        this.balance ={};
+        this.balance ={income: 0 , expense:0};
         this.categoryCounts={};
         data.forEach(async(transaction: any) => {
 

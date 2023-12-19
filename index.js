@@ -17,6 +17,7 @@ app.use(cors({
 
 //set static Folder (angular build)
 app.use(express.static(path.join(__dirname,'public')))
+
 app.use(express.json())
 
 app.use(bodyPaser.urlencoded({ extended: false }));

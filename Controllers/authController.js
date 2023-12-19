@@ -10,7 +10,8 @@ exports.register = async (req, res) => {
   if (await User.checkIfUserExists(email)) {
     // Dashboard
     console.log("rrr");
-    return res.status(400).json({
+    return res.json({
+      success: false,
       error: true,
       msg: "USER_ALREADY_EXISTS",
     });
@@ -32,7 +33,7 @@ exports.register = async (req, res) => {
         const token =  jwt.sign({
           data: userData
         }, secert,
-        { expiresIn: 60 * 60 * 60});
+        { expiresIn: 60 * 60 * 20});
   
         return res.json({
           error: false,
@@ -41,6 +42,7 @@ exports.register = async (req, res) => {
         });
       } catch (error) {
         return res.json({
+          success: false,
           error: true,
           msg: "internal Error...!",
         });
@@ -48,6 +50,7 @@ exports.register = async (req, res) => {
     })
     .catch((err) => {
       return res.status(500).json({
+        success: false,
         error: true,
         msg: err.message,
       });
@@ -79,7 +82,7 @@ exports.login = async (req, res) => {
      const authToken =  jwt.sign({
         data: payload
       }, secert,
-      { expiresIn: 30});
+      { expiresIn: 60 * 60 * 20});
 
       console.log(payload)
       req.session.user = payload;
@@ -96,7 +99,7 @@ exports.login = async (req, res) => {
       });
     }
   } else {
-    return res.status(401).json({
+    return res.json({
       error: true,
       msg: "invalid Email or Password",
     });
@@ -110,7 +113,7 @@ exports.logout = async (req, res) => {
     req.session.destroy();
     return res.json({
       error: false,
-      msg: "",
+      msg: "Thank You",
     });
   } catch (error) {
     return res.json({

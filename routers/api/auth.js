@@ -3,7 +3,7 @@ const router =express.Router();
 const bodyParser = require("body-parser")
 const key = require("../../setup/keys/tokens.js").TOKEN_KEY;
 const helper = require("../../helpers/sessionVerfiy.js")
-const authController = require("../../Controllers/AuthController.js");
+const authController = require("../../Controllers/authController.js");
 
 
 

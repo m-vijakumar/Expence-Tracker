@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { FormControl } from '@angular/forms';
-import { MenuItem } from 'primeng/api';
+import { MenuItem, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-root',
@@ -32,7 +32,8 @@ export class AppComponent implements OnInit {
     private authservice: AuthService,
     private userService: UserService,
     private subscriptionService: SubscriptionService,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {
     this.authservice.isLoggedIn = false;
   }
@@ -115,10 +116,11 @@ export class AppComponent implements OnInit {
   onLogout() {
     this.authservice.logout().subscribe(async(res) => {
       this.router.navigate(['/']);
-      this.snackBar.open('logout', '', {
-        duration: 3000,
-        verticalPosition: 'top',
+      this.messageService.add({
+        severity: 'success',
+        detail: 'Thank You',
       });
+      
     });
   }
 

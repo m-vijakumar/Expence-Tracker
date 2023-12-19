@@ -15,6 +15,7 @@ import {AvatarModule} from 'primeng/avatar'
 import { ScrollerModule } from 'primeng/scroller';
 import { ContextMenuModule } from "primeng/contextmenu";
 import { ChipModule } from 'primeng/chip';
+import { ToastModule } from 'primeng/toast';
 const PrimengComponents = [
     ButtonModule,
     ChartModule,
@@ -31,8 +32,8 @@ const PrimengComponents = [
     AvatarModule,
     ScrollerModule,
     ContextMenuModule,
-    ChipModule
-
+    ChipModule,
+    ToastModule
 
 ]
 @NgModule({
