@@ -18,7 +18,7 @@ export class AuthService {
   isLoggedIn?: boolean = false;
   formData!: User;
 
-  readonly APIUrl = 'http://localhost:5000/api/auth';
+  readonly APIUrl = 'api/auth';
 
   // set user Details to User Subscription Data
   setUserDetails() {

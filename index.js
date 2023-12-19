@@ -9,11 +9,14 @@ const jwt = require("jsonwebtoken")
 const db = require("./setup/config/db.js");
 const app = express();
 
-const port = process.env.port || 5000;
+const port = process.env.port || 8080;
 
 app.use(cors({
   credentials: true
 }))
+
+//set static Folder (angular build)
+app.use(express.static(path.join(__dirname,'public')))
 app.use(express.json())
 
 app.use(bodyPaser.urlencoded({ extended: false }));
@@ -43,6 +46,9 @@ db.dbConnect()
 app.get("/", (req, res) => {
   res.send("heyy hello...!");
 });
+app.get('*', (req, res)=>{
+  res.sendFile(path.join(__dirname, 'public/index.html'))
+})
 
 app.listen(port, console.log(`server is running on ${port} ...... `));
 
