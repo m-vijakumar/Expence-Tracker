@@ -25,6 +25,7 @@ import { SubscriptionService } from './services/subscription.service';
 import { TransactionComponent } from './transaction/transaction.component';
 import { TransactionService } from './services/transaction.service';
 import { MessageService } from 'primeng/api';
+import { UserComponent } from './user/user.component';
 
 
 
@@ -35,7 +36,8 @@ import { MessageService } from 'primeng/api';
     LoginComponent,
     RegisterComponent,
     DashboardComponent,
-    TransactionComponent
+    TransactionComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,

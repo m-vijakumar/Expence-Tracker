@@ -81,4 +81,8 @@ UserSchema.statics.checkIfUserExists = async (email) => {
     });
 };
 
+UserSchema.statics.updateUserDetails = ()=>{
+  return 
+}
+
 const User = (module.exports = mongooes.model("users", UserSchema));
