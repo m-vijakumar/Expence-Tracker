@@ -41,12 +41,23 @@ export class DashboardComponent implements OnInit {
     this.categoryCounts= {};
   this.balance={};
   }
+  
+  visible: boolean = false;
 
+  showDialog() {
+      this.visible = true;
+  }
+
+  closeDialog() {
+      this.visible = false;
+  }
  
   async ngOnInit(): Promise<void> {
     // get document text color for chart color
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
+
+  
 
     //Get UserData from Subscribed data
     this.subscriptionService.userData
@@ -169,7 +180,9 @@ export class DashboardComponent implements OnInit {
   // }
   updateTransaction(transaction:any){
     console.log("in update Transaction")
+    
     console.log(transaction)
+    this.visible = true;
   }
   deleteTransaction(transaction:any){
     this.transactionService.deleteTransaction(transaction._id).subscribe((res)=>{

@@ -26,6 +26,7 @@ import { TransactionComponent } from './transaction/transaction.component';
 import { TransactionService } from './services/transaction.service';
 import { MessageService } from 'primeng/api';
 import { UserComponent } from './user/user.component';
+import { TransactionFormComponent } from './dashboard/transaction-form/transaction-form.component';
 
 
 
@@ -37,7 +38,8 @@ import { UserComponent } from './user/user.component';
     RegisterComponent,
     DashboardComponent,
     TransactionComponent,
-    UserComponent
+    UserComponent,
+    TransactionFormComponent
   ],
   imports: [
     BrowserModule,

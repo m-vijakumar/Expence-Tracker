@@ -8,7 +8,7 @@ export class UserService {
   readonly APIUrl!: string;
 
   constructor(private http: HttpClient) {
-    this.APIUrl = '/api/user/';
+    this.APIUrl = 'http://localhost:8080/api/user/';
   }
 
   registerUser(userdetails: any) {

@@ -2,6 +2,8 @@ const { cookie } = require("express-validator");
 const User = require("../Models/UserModel");
 const jwt = require("jsonwebtoken")
 const secert = require("../setup/keys/tokens").TOKEN_KEY
+
+
 exports.register = async (req, res) => {
   const email = req.body.email;
   const password = req.body.password;

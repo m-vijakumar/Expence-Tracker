@@ -9,9 +9,9 @@ const UserSchema = new Schema(
       type: String,
       require: true,
     },
-    username:{
+    username: {
       type: String,
-      require: true
+      require: true,
     },
     password: {
       type: String,
@@ -24,9 +24,9 @@ const UserSchema = new Schema(
           type: String,
           require: true,
         },
-        type:{
+        type: {
           type: String,
-          required: true
+          required: true,
         },
         amount: {
           type: Number,
@@ -48,11 +48,11 @@ const UserSchema = new Schema(
   }
 );
 
-UserSchema.pre('save', function(next){
+UserSchema.pre("save", function (next) {
   var user = this;
   const saltRounds = 12;
 
-  if (!user.isModified('password')) {
+  if (!user.isModified("password")) {
     console.log("password not modified ");
     return next();
   }
@@ -66,7 +66,7 @@ UserSchema.pre('save', function(next){
   });
 });
 
-UserSchema.methods.comparePassword =  async function(input_password) {
+UserSchema.methods.comparePassword = async function (input_password) {
   return await bcrypt.compare(input_password, this.password);
 };
 
@@ -81,8 +81,23 @@ UserSchema.statics.checkIfUserExists = async (email) => {
     });
 };
 
-UserSchema.statics.updateUserDetails = ()=>{
-  return 
-}
+UserSchema.statics.updateUserDetails = () => {
+  return;
+};
+
+UserSchema.statics.updateTransaction = async (userId, transactionId ,transaction) => {
+  return await User.findOneAndUpdate(
+    { _id:userId, "Transactions._id": transactionId},
+    { $set: { "Transactions.$": transaction } }
+  )
+    .then((result) => {
+      console.log("update transaction");
+      console.log(result);
+      return result;
+    })
+    .catch(() => {
+      throw err;
+    });
+};
 
 const User = (module.exports = mongooes.model("users", UserSchema));

@@ -23,7 +23,7 @@ export class TransactionService {
 
   formData!: Transaction;
 
-  readonly APIUrl = 'api/transaction';
+  readonly APIUrl = 'http://localhost:8080/api/transaction';
 
   private _refreshRequried = new Subject<void>();
 

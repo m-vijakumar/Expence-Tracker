@@ -18,6 +18,13 @@ router.get("/all-transaction", helper.JWTverify, transactionController.getAllTra
 
 router.post("/add", helper.JWTverify, transactionController.create )
 
+// @type    POST
+//@route    /api/transcation/update
+// @desc    starting router
+// @access  PRAVITE
+
+router.post("/update", helper.JWTverify, transactionController.updateTranscation )
+
 
 // @type    DELETE
 //@route    /api/transcation/delete

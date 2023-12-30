@@ -74,7 +74,10 @@
                             <div class="flex-column  align-self-center">
                                 <div style="position: absolute; " class=" d-flex  align-item-center">
                                   
-                                    <p-button icon="pi pi-pencil" [rounded]="true" [text]="true"  class="icon-button" (click)="updateTransaction(transaction)"></p-button>
+                                    <p-button icon="pi pi-pencil" [rounded]="true" [text]="true"  class="icon-button" (click)="showDialog()"></p-button>
+                                    <p-dialog [(visible)]="visible" [breakpoints]="{ '960px': '75vw' }" [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false">
+                                        <app-transaction-form [transaction] = "transaction" (sendTransactionData)="updateTransaction($event)></app-transaction-form>
+                                    </p-dialog>
                                     <p-button icon="pi pi-times" [rounded]="true" [text]="true" severity="danger " class="icon-button" (click)="deleteTransaction(transaction)"></p-button>
                                 </div>
                             </div>

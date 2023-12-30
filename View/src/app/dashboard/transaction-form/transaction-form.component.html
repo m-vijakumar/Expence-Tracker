@@ -1,11 +1,11 @@
-<form [formGroup]="transactionForm" class="d-flex flex-column align-items-center flex-wrap p-2" (submit)="addTransaction()">
-    <p-selectButton formControlName="type" defaultvalue="income" [options]="stateOptions" optionLabel="label" class="p-2 custom-width" optionValue="value"></p-selectButton>
+<form [formGroup]="transactionForm" class="d-flex flex-column align-items-center flex-wrap p-2" (submit)="updateTransactionData()">
+    <p-selectButton formControlName="type"  [options]="stateOptions" optionLabel="label" class="p-2 custom-width" optionValue="value"></p-selectButton>
 
     <input formControlName="description" placeholder="Description" type="text" class="p-inputtext-lg mb-2 " pInputText />
 
     <p-inputNumber formControlName="amount" placeholder="Amount" inputId="integeronly" class="p-2 mb-2 custom-width"></p-inputNumber>
 
-    <p-dropdown formControlName="category"  [options]="categories" class="p-2 mb-2 custom-width" placeholder="Select Category"></p-dropdown>
+    <p-dropdown formControlName="category" [options]="categories" class="p-2 mb-2 custom-width" placeholder="Select Category"></p-dropdown>
 
     <p-calendar formControlName="date" placeholder="Date" class="py-2 mb-2 custom-width"></p-calendar>
 

@@ -78,3 +78,31 @@ exports.deleteTranscation = async (req, res) => {
         });
       });
 }
+
+
+exports.updateTranscation = async (req,res)=>{
+
+  const transactionId = req.body.transaction.id;
+  const transaction = req.body.transaction;
+
+  delete transaction['id'];
+
+  console.log(transactionId)
+  console.log(transaction)
+
+  await User.updateTransaction(req.user.id, transactionId ,transaction)
+  .then((result)=>{
+    console.log(result)
+    res.json({
+      error: false,
+      msg: "Transaction Updated",
+    });
+  })
+  .catch((err) => {
+    console.log(err);
+    res.json({
+      error: true,
+      msg: "internal Error...!!!",
+    });
+  });
+}
