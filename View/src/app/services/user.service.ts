@@ -10,7 +10,7 @@ export class UserService {
   readonly APIUrl!: string;
 
   constructor(private http: HttpClient) {
-    this.APIUrl = 'http://localhost:8080/api/user/';
+    this.APIUrl = '/api/user/';
   }
 
   updatePassword(passwordData: any) {
