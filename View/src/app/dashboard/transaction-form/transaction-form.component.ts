@@ -12,8 +12,8 @@ import { TransactionService } from 'src/app/services/transaction.service';
   styleUrls: ['./transaction-form.component.css']
 })
 export class TransactionFormComponent  {
-  @Input() transaction = new Transaction();
-  @Output() sendTransactionData = new EventEmitter<string[]>();
+  @Input() selectedTransaction: any = null;
+  // @Output() sendTransactionData = new EventEmitter<string[]>();
 
     
   userData = new User();
@@ -21,7 +21,8 @@ export class TransactionFormComponent  {
     public service : TransactionService,
     private snackBar: MatSnackBar,
     private subscriptionService: SubscriptionService,
-
+    private transactionService: TransactionService,
+    
     ){
 
   }
@@ -34,16 +35,17 @@ categories = ['Travel', 'Grocery', 'Rent', 'Mortgages', 'Entertainment', 'Insura
   ngOnInit(): void {
     this.transactionForm.reset()
 
-    console.log(this.transaction)
-    this.transactionForm.patchValue(this.transaction);
-
-    this.subscriptionService.userData
-      .asObservable()
-      .subscribe((data) => {
-        
-        this.userData = data;
-      });
-      console.log(this.userData)
+    // console.log(this.selectedTransaction)
+    // this.transactionForm.patchValue(this.selectedTransaction);
+  }
+  ngOnChanges(): void {
+    if(this.selectedTransaction){
+      this.selectedTransaction.date = new Date(this.selectedTransaction.date);
+    }
+   
+    console.log(this.selectedTransaction)
+    this.transactionForm.patchValue(this.selectedTransaction);
+    // this.transactionForm.patchValue(date: this.selectedTransaction);
   }
  
   transactionForm: FormGroup = new FormGroup({
@@ -51,13 +53,20 @@ categories = ['Travel', 'Grocery', 'Rent', 'Mortgages', 'Entertainment', 'Insura
     type: new FormControl(''),
     amount: new FormControl(),
     category: new FormControl(''),
-    date: new FormControl()
+    date: new FormControl(new Date())
     
   })
   
   //Using Reactive form to update Transaction
-  updateTransactionData(){
-    this.sendTransactionData.emit(  this.transactionForm.value )
+  updateTransaction(){
+    console.log(this.transactionForm.value)
+    var transactionData = this.transactionForm.value;
+    transactionData.id = this.selectedTransaction._id;
+    console.log(transactionData)
+    this.transactionService.updateTransaction(transactionData).subscribe(()=>{
+
+    })
+    // this.sendTransactionData.emit(  this.transactionForm.value )
 
 
   }

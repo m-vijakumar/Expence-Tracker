@@ -17,6 +17,7 @@ import { ContextMenuModule } from "primeng/contextmenu";
 import { ChipModule } from 'primeng/chip';
 import { ToastModule } from 'primeng/toast';
 import { DialogModule } from 'primeng/dialog';
+import { PasswordModule } from 'primeng/password';
 
 const PrimengComponents = [
     ButtonModule,
@@ -36,7 +37,8 @@ const PrimengComponents = [
     ContextMenuModule,
     ChipModule,
     ToastModule,
-    DialogModule
+    DialogModule,
+    PasswordModule
 
 ]
 @NgModule({

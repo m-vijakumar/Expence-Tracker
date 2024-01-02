@@ -1,1 +1,36 @@
-<p>user works!</p>
+<p-card header="User Data">
+
+    <div class="d-flex  flex-column">
+       
+         <div >
+            <h2 style="display: inline;"> UserName :  </h2> 
+            <h2 style="display: inline;">  {{this.userData.userName}} </h2>
+         </div>
+         <div>
+            <h2 style="display: inline;">Email :  </h2>
+            <h2 style="display: inline;">  {{this.userData.email}} </h2>
+         </div>
+              
+    </div>
+    <p-divider></p-divider>
+
+    <h2>Update Your Password</h2>
+
+    <form [formGroup]="updatePasswordForm" class="d-flex flex-column  flex-wrap p-2" (submit)="updatePassword()">
+
+        <div *ngIf="passwordError" class="text-danger">{{this.errorMessage}}</div>
+        <div *ngIf="passwordupdate" class="text-success">Password Successfully Updated</div>
+        <label for="pwd1" class="p-1">Old Password</label>
+            <p-password formControlName="oldpassword" inputId="pwd1" [toggleMask]="true"></p-password>
+            <p-divider></p-divider>
+            <label for="pwd2" class="p-1">New Password</label>
+            <p-password formControlName="newpassword" inputId="pwd2" [toggleMask]="true"></p-password>
+
+            <label for="pwd3" class="p-2">Confirm Password</label>
+            <p-password formControlName="confirmpassword" inputId="pwd3" [toggleMask]="true"></p-password>
+
+            <div *ngIf="passwordsDoNotMatch" class="text-danger">Passwords do not match</div>
+<br/>
+        <p-button  type="submit" value="submit" [rounded]="true" [disabled]="this.buttonStatus" class="mb-2 submit-btn custom-width">{{this.buttonText}}</p-button>
+    </form>
+</p-card>

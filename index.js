@@ -38,6 +38,7 @@ app.use(session({
 
 app.use("/api",require("./routers/api/auth.js"));
 app.use("/api/transaction", require("./routers/api/transaction.js"))
+app.use("/api" , require("./routers/api/user.js"))
 
 
 

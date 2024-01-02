@@ -4,7 +4,7 @@ import { SubscriptionService } from './subscription.service';
 import { Transaction } from '../models/transaction-model';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { response } from 'express';
+import { application, response } from 'express';
 import { AppComponent } from '../app.component';
 import { AuthService } from './auth.service';
 import { Router } from '@angular/router';
@@ -94,8 +94,25 @@ export class TransactionService {
   loginError(){
     console.log("login error")
   }
-  updateTransaction(transactionId : number){
-
+  updateTransaction(transaction : any){
+    var  authHeader = new HttpHeaders({
+      Authorization: 'Bearer ' + localStorage.getItem('authToken'),
+      'Content-Type': 'application/json'
+    });
+    console.log(transaction)
+    return this.http.put<any>(this.APIUrl+ '/update', {transaction: transaction}, { headers: authHeader }).pipe(
+      map(async(response)=>{
+        console.log(response)
+        if(response.error == true){ 
+          console.log("response.error == true")
+          this.authService.logout().subscribe(()=>{
+            this.router.navigate(['/']);
+          });
+        }
+        this.RefreshRequried.next();
+        return response;
+      })
+    ) 
   }
 
   deleteTransaction(transactionId : number){

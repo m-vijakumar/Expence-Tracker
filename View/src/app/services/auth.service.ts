@@ -31,8 +31,10 @@ export class AuthService {
       console.log(decodeUserDetails);
       userDetails.userId = decodeUserDetails.data.id;
       userDetails.userName = decodeUserDetails.data.username;
-      userDetails.isLoggedIn = true;
+      userDetails.email = decodeUserDetails.data.email;
 
+      userDetails.isLoggedIn = true;
+      
       this.subscriptionService.userData.next(userDetails);
     }
   }

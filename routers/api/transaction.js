@@ -23,7 +23,7 @@ router.post("/add", helper.JWTverify, transactionController.create )
 // @desc    starting router
 // @access  PRAVITE
 
-router.post("/update", helper.JWTverify, transactionController.updateTranscation )
+router.put("/update", helper.JWTverify, transactionController.updateTranscation )
 
 
 // @type    DELETE

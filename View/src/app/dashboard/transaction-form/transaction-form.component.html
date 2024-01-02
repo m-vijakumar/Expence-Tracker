@@ -1,4 +1,4 @@
-<form [formGroup]="transactionForm" class="d-flex flex-column align-items-center flex-wrap p-2" (submit)="updateTransactionData()">
+<form [formGroup]="transactionForm" class="d-flex flex-column align-items-center flex-wrap p-2" (submit)="updateTransaction()">
     <p-selectButton formControlName="type"  [options]="stateOptions" optionLabel="label" class="p-2 custom-width" optionValue="value"></p-selectButton>
 
     <input formControlName="description" placeholder="Description" type="text" class="p-inputtext-lg mb-2 " pInputText />
@@ -7,7 +7,7 @@
 
     <p-dropdown formControlName="category" [options]="categories" class="p-2 mb-2 custom-width" placeholder="Select Category"></p-dropdown>
 
-    <p-calendar formControlName="date" placeholder="Date" class="py-2 mb-2 custom-width"></p-calendar>
+    <p-calendar formControlName="date" placeholder="Date" class="py-2 mr-2 "></p-calendar>
 
-    <p-button label="+ Add" type="submit" value="submit" [rounded]="true" class="mb-2 submit-btn custom-width"></p-button>
+    <p-button label="Update" type="submit" value="submit" [rounded]="true" class="mb-2 submit-btn custom-width"></p-button>
 </form>

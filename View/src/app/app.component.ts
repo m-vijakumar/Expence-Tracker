@@ -54,7 +54,7 @@ export class AppComponent implements OnInit {
           userId: decodeUserDetails.data.id,
           userName: decodeUserDetails.data.username,
           isLoggedIn: true,
-          email: undefined,
+          email: decodeUserDetails.data.email,
           password: undefined
         });
       }
@@ -74,10 +74,19 @@ export class AppComponent implements OnInit {
           label: this.userData.userName,
           items: [
             {
+              label: 'Dashboard',
+              icon: 'pi pi-wallet',
+              command: () => {
+                // this.update();
+                this.router.navigate(['/dashboard']);
+              },
+            },
+            {
               label: 'Edit Account',
               icon: 'pi pi-user-edit',
               command: () => {
                 // this.update();
+                this.router.navigate(['/user', this.userData.userName]);
               },
             },
             {

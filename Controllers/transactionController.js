@@ -92,6 +92,7 @@ exports.updateTranscation = async (req,res)=>{
 
   await User.updateTransaction(req.user.id, transactionId ,transaction)
   .then((result)=>{
+    console.log("updated TRANSACTION LIST")
     console.log(result)
     res.json({
       error: false,

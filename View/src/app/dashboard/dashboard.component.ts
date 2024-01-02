@@ -9,6 +9,7 @@ import { User } from '../models/user-models';
 import { TransactionService } from '../services/transaction.service';
 import { Subject } from 'rxjs';
 import { MenuItem } from 'primeng/api';
+import { Transaction } from '../models/transaction-model';
 
 
 @Component({
@@ -27,6 +28,7 @@ export class DashboardComponent implements OnInit {
   balance: any;
   userDataSubscription: any;
   showIcons = false;
+  selectedTransaction: any = null;
 
   constructor(
     private dialog: MatDialog,
@@ -44,8 +46,13 @@ export class DashboardComponent implements OnInit {
   
   visible: boolean = false;
 
-  showDialog() {
+  showEditDialog(transaction : any) {
+    // console.log(transaction)
+    this.selectedTransaction = transaction;
+    console.log(this.selectedTransaction)
       this.visible = true;
+      
+      
   }
 
   closeDialog() {
@@ -53,6 +60,7 @@ export class DashboardComponent implements OnInit {
   }
  
   async ngOnInit(): Promise<void> {
+    this.visible = false;
     // get document text color for chart color
     const documentStyle = getComputedStyle(document.documentElement);
     const textColor = documentStyle.getPropertyValue('--text-color');
@@ -76,7 +84,8 @@ export class DashboardComponent implements OnInit {
       console.log(res)
     })
     //get all Transaction from transactions
-    this.transactionService.RefreshRequried.subscribe(async(res)=>{   
+    this.transactionService.RefreshRequried.subscribe(async(res)=>{ 
+      this.visible = false;  
       await this.getAllTransaction();
     })
 
